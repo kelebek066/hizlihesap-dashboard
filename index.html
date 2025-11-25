@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hızlı Hesap — Dashboard</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#eef3f8;
+  color:#123;
+}
+header{
+  background:linear-gradient(90deg,#006CFF,#00D2FF);
+  padding:20px;
+  color:white;
+}
+header h1{margin:0;font-size:28px}
+header p{margin:4px 0 0;font-size:14px;opacity:0.9}
+
+.container{max-width:1100px;margin:20px auto;padding:20px}
+
+.hero{
+  display:flex;
+  gap:20px;
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.08);
+}
+.hero img{
+  width:260px;
+  height:160px;
+  object-fit:cover;
+  border-radius:12px;
+}
+.hero h2{margin:0}
+.hero p{margin-top:6px;color:#456}
+
+.grid{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.card{
+  background:white;
+  padding:16px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+  transition:.15s;
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 6px 16px rgba(0,0,0,0.1)}
+.card h3{margin:0}
+.card p{margin:6px 0 0;color:#555}
+
+.panel{
+  margin-top:20px;
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.06);
+}
+.panel .title{font-size:20px;font-weight:bold;margin-bottom:12px}
+
+input, select{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
+button{
+  padding:10px 16px;
+  border-radius:8px;
+  border:0;
+  background:#007bff;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+.result{
+  background:#e6f0ff;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Hızlı Hesap</h1>
+  <p>Glassmorphism dashboard — Tüm araçlar bir arada</p>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <img src="hero.jpg" alt="Hero">
+    <div>
+      <h2>Tüm Araçlar Tek Panelde</h2>
+      <p>Matematik, kredi, sağlık, dönüşüm araçları ve daha fazlası.</p>
+    </div>
+  </div>
+
+  <!-- KARTLAR -->
+  <div class="grid">
+    <div class="card" onclick="openTool('basic')"><h3>🧮 Dört İşlem</h3><p>Toplama, çıkarma, çarpma, bölme.</p></div>
+    <div class="card" onclick="openTool('bmi')"><h3>⚖️ BMI Hesabı</h3><p>Kitle indeksini hesapla.</p></div>
+    <div class="card" onclick="openTool('credit')"><h3>🏦 Kredi</h3><p>Taksit hesaplama.</p></div>
+  </div>
+
+  <!-- PANEL -->
+  <div class="panel" id="panel">
+    <div class="title" id="panel-title">Bir araç seçin</div>
+    <div id="panel-body">Başlamak için yukarıdaki kartlardan birine dokunun.</div>
+  </div>
+
+</div>
+
+<script>
+function openTool(name){
+  const title = document.getElementById("panel-title");
+  const body  = document.getElementById("panel-body");
+
+  if(name === "basic"){
+    title.innerText = "Dört İşlem";
+    body.innerHTML = `
+      <input id="n1" placeholder="1. sayı" type="number">
+      <input id="n2" placeholder="2. sayı" type="number">
+      <button onclick="calcBasic('+')">Topla</button>
+      <button onclick="calcBasic('-')">Çıkar</button>
+      <button onclick="calcBasic('*')">Çarp</button>
+      <button onclick="calcBasic('/')">Böl</button>
+      <div id="res" class="result"></div>
+    `;
+  }
+
+  if(name === "bmi"){
+    title.innerText = "BMI Hesabı";
+    body.innerHTML = `
+      <input id="kg" placeholder="Kilo (kg)" type="number">
+      <input id="cm" placeholder="Boy (cm)" type="number">
+      <button onclick="doBMI()">Hesapla</button>
+      <div id="res" class="result"></div>
+    `;
+  }
+
+  if(name === "credit"){
+    title.innerText = "Kredi Hesaplama";
+    body.innerHTML = `
+      <input id="amount" placeholder="Tutar" type="number">
+      <input id="rate" placeholder="Faiz (%)" type="number">
+      <input id="month" placeholder="Vade (ay)" type="number">
+      <button onclick="doCredit()">Hesapla</button>
+      <div id="res" class="result"></div>
+    `;
+  }
+}
+
+function calcBasic(op){
+  const a = parseFloat(document.getElementById('n1').value)||0;
+  const b = parseFloat(document.getElementById('n2').value)||0;
+
+  let r = 0;
+  if(op==='+') r=a+b;
+  if(op==='-') r=a-b;
+  if(op==='*') r=a*b;
+  if(op==='/') r=b===0?"Sıfıra bölünemez":(a/b);
+
+  document.getElementById('res').innerText = "Sonuç: " + r;
+}
+
+function doBMI(){
+  const kg = parseFloat(document.getElementById('kg').value);
+  const cm = parseFloat(document.getElementById('cm').value);
+  if(!kg || !cm){document.getElementById('res').innerText="Veri girin";return;}
+  const m = cm/100;
+  const bmi = kg/(m*m);
+  document.getElementById('res').innerText = "BMI: " + bmi.toFixed(2);
+}
+
+function doCredit(){
+  const amt = parseFloat(document.getElementById('amount').value)||0;
+  const rate = parseFloat(document.getElementById('rate').value)||0;
+  const m = parseInt(document.getElementById('month').value)||1;
+
+  const r = rate/100/12;
+  const monthly = r===0 ? amt/m : (amt*r)/(1-Math.pow(1+r,-m));
+  const total = monthly*m;
+
+  document.getElementById('res').innerText =
+    "Aylık: " + monthly.toFixed(2) + " TL — Toplam: " + total.toFixed(2) + " TL";
+}
+</script>
+
+</body>
+</html>
