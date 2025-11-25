@@ -2,79 +2,245 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hızlı Hesap — Pro Dashboard</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#f0f2f7;color:#222;transition:.3s;}
-.dark body{background:#1a1d24;color:#eee;}
-.sidebar{width:240px;height:100vh;position:fixed;left:0;top:0;background:#0f141d;color:#fff;padding:20px;overflow-y:auto;}
-.sidebar h2{margin-top:0;font-size:22px;}
-.sidebar .item{margin:10px 0;opacity:.85;cursor:pointer;}
-.sidebar .item:hover{opacity:1;}
-main{margin-left:260px;padding:20px;}
-.toggle{position:fixed;right:20px;top:20px;padding:8px 14px;background:#007bff;color:#fff;border-radius:8px;cursor:pointer;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px;}
-.card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.08);cursor:pointer;}
-.dark .card{background:#2b303a;}
-.panel{margin-top:20px;background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
-.dark .panel{background:#2b303a;color:#eee;}
-input,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc;}
-button{padding:10px 16px;background:#007bff;color:#fff;border:0;border-radius:8px;margin-top:10px;cursor:pointer;}
-.result{margin-top:10px;padding:10px;background:#e6f0ff;border-radius:8px;}
-.dark .result{background:#3b4658;}
+/* ---------- GENEL TASARIM ---------- */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef1f7;
+  color: #222;
+  transition: 0.30s;
+}
+.dark body { background: #1a1d24; color: #eee; }
+
+h1,h2,h3,p { margin: 0; }
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: #0f141d;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 22px;
+  box-sizing: border-box;
+}
+.sidebar h2 { margin-bottom: 18px; }
+.sidebar .item {
+  margin: 10px 0;
+  padding: 6px 0;
+  cursor: pointer;
+  opacity: .85;
+}
+.sidebar .item:hover { opacity: 1; }
+
+/* ---------- TEMA BUTONU ---------- */
+.toggle {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  background: #007bff;
+  padding: 10px 18px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 3px 8px rgba(0,0,0,.18);
+}
+
+/* ---------- ANA ALAN ---------- */
+main {
+  margin-left: 270px;
+  padding: 20px;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  display: flex;
+  gap: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.08);
+}
+.dark .hero { background: #2b303a; }
+.hero img {
+  width: 260px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ---------- ARAÇ KARTLARI ---------- */
+.grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 16px;
+}
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,.10);
+  transition: .18s;
+  font-size: 16px;
+  font-weight: 600;
+}
+.dark .card { background: #2b303a; color: #eee; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 6px 16px rgba(0,0,0,.15); }
+
+/* ---------- PANEL ---------- */
+.panel {
+  margin-top: 25px;
+  padding: 20px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.10);
+}
+.dark .panel { background: #2b303a; color: #eee; }
+
+input,select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin: 6px 0;
+}
+button {
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.result {
+  margin-top: 10px;
+  background: #e6f0ff;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+.dark .result { background: #3b4658; }
+
+/* Reklam */
+.adbox {
+  margin-top: 20px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.10);
+}
+.dark .adbox { background: #2b303a; }
+
 </style>
 </head>
+
 <body>
 
+<!-- SIDEBAR -->
 <div class="sidebar">
-<h2>Hızlı Hesap</h2>
-<div class="item">Ana Sayfa</div>
-<div class="item">Matematik</div>
-<div class="item">Finans</div>
-<div class="item">Sağlık</div>
-<div class="item">Dönüştürücüler</div>
-<hr>
-<div class="item">Reklam Alanı</div>
+  <h2>Hızlı Hesap</h2>
+  <div class="item">Ana Sayfa</div>
+  <div class="item">Matematik Araçları</div>
+  <div class="item">Finans Araçları</div>
+  <div class="item">Sağlık</div>
+  <div class="item">Dönüştürücüler</div>
+  <hr style="border-color:#333;margin:16px 0;">
+  <div class="item">Reklam Alanı</div>
 </div>
 
-<div class="toggle" onclick="toggleMode()">Tema</div>
+<!-- TEMA BUTONU -->
+<div class="toggle" onclick="toggleMode()">☾ Tema</div>
 
+<!-- ANA ALAN -->
 <main>
-<h1>Dashboard Pro</h1>
-<p>15 araçtan birini seçin:</p>
 
-<div class="grid">
-  <div class="card" onclick="openTool('basic')">🧮 Dört İşlem</div>
-  <div class="card" onclick="openTool('advanced')">🔢 Gelişmiş Matematik</div>
-  <div class="card" onclick="openTool('credit')">🏦 Kredi</div>
-  <div class="card" onclick="openTool('interest')">📈 Faiz</div>
-  <div class="card" onclick="openTool('salary')">💼 Maaş</div>
-  <div class="card" onclick="openTool('bmi')">⚖️ BMI</div>
-  <div class="card" onclick="openTool('age')">🎂 Yaş</div>
-  <div class="card" onclick="openTool('time')">⏱ Zaman Dönüştür</div>
-  <div class="card" onclick="openTool('currency')">💱 Döviz</div>
-  <div class="card" onclick="openTool('unit')">🔁 Birim</div>
-  <div class="card" onclick="openTool('percent')">📊 Yüzde</div>
-  <div class="card" onclick="openTool('mod')">➗ Mod</div>
-  <div class="card" onclick="openTool('sqrt')">√ Karekök</div>
-  <div class="card" onclick="openTool('power')">^ Üs</div>
-  <div class="card" onclick="openTool('calc')">🧾 Hızlı Hesap</div>
-</div>
+  <!-- HERO -->
+  <div class="hero">
+    <img src="hero.jpg">
+    <div>
+      <h2>Hızlı Hesap Dashboard</h2>
+      <p>Tüm araçlar tek panelde: Matematik, Finans, Sağlık ve Dönüştürücüler.</p>
+    </div>
+  </div>
 
-<div id="panel" class="panel">
-<h2 id="panel-title">Bir araç seçin</h2>
-<div id="panel-body">Kartlardan birine tıklayın.</div>
-</div>
+  <!-- ARAÇ KARTLARI -->
+  <div class="grid">
+    <div class="card" onclick="openTool('basic')">🧮 Dört İşlem</div>
+    <div class="card" onclick="openTool('advanced')">🔢 Gelişmiş Matematik</div>
+    <div class="card" onclick="openTool('credit')">🏦 Kredi Hesap</div>
+    <div class="card" onclick="openTool('interest')">📈 Faiz</div>
+    <div class="card" onclick="openTool('salary')">💼 Maaş</div>
+    <div class="card" onclick="openTool('bmi')">⚖️ BMI</div>
+    <div class="card" onclick="openTool('age')">🎂 Yaş</div>
+    <div class="card" onclick="openTool('time')">⏱ Zaman</div>
+    <div class="card" onclick="openTool('currency')">💱 Döviz</div>
+    <div class="card" onclick="openTool('unit')">🔁 Birim</div>
+    <div class="card" onclick="openTool('percent')">📊 Yüzde</div>
+    <div class="card" onclick="openTool('mod')">➗ Mod</div>
+    <div class="card" onclick="openTool('sqrt')">√ Karekök</div>
+    <div class="card" onclick="openTool('power')">^ Üs</div>
+    <div class="card" onclick="openTool('calc')">🧾 Hızlı Hesap</div>
+  </div>
+
+  <!-- PANEL -->
+  <div id="panel" class="panel">
+    <h2 id="panel-title">Bir araç seçin</h2>
+    <div id="panel-body">Yukarıdan bir araç seçin.</div>
+  </div>
 
 </main>
 
 <script>
-function toggleMode(){document.body.classList.toggle("dark");}
 
-function openTool(name){
- document.getElementById("panel-title").innerText=name;
- document.getElementById("panel-body").innerHTML="<p>Bu aracın arayüzü burada yer alacak.</p>";
+/* ---------- DARK MODE ---------- */
+function toggleMode() {
+  document.body.classList.toggle("dark");
 }
+
+/* ---------- ARAÇ PANELİ ---------- */
+function openTool(name) {
+  const title = document.getElementById("panel-title");
+  const body = document.getElementById("panel-body");
+
+  title.innerText = name.toUpperCase();
+
+  if(name === "basic"){
+    body.innerHTML = `
+      <input id="b1" type="number" placeholder="1. sayı">
+      <input id="b2" type="number" placeholder="2. sayı">
+      <button onclick="doBasic('+')">Topla</button>
+      <button onclick="doBasic('-')">Çıkar</button>
+      <button onclick="doBasic('*')">Çarp</button>
+      <button onclick="doBasic('/')">Böl</button>
+      <div id="res-basic" class="result"></div>
+    `;
+  }
+
+  else body.innerHTML = `<p>Bu araç yakında eklenecek.</p>`;
+}
+
+/* ---------- DÖRT İŞLEM ---------- */
+function doBasic(op){
+  const a = parseFloat(document.getElementById('b1').value) || 0;
+  const b = parseFloat(document.getElementById('b2').value) || 0;
+  let r = 0;
+  if(op==='+') r=a+b;
+  if(op==='-') r=a-b;
+  if(op==='*') r=a*b;
+  if(op==='/') r=b===0?"Sıfıra bölünemez":a/b;
+  document.getElementById('res-basic').innerText = "Sonuç: "+r;
+}
+
 </script>
 
 </body>
