@@ -1,1 +1,14 @@
-assets/img/logo.svg
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="90" stroke="#58a6ff" stroke-width="10"/>
+    
+    <!-- Üçgen şekilli üst ikon -->
+    <path d="M60 110 L100 60 L140 110" 
+          stroke="#58a6ff" 
+          stroke-width="10" 
+          fill="none" 
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+
+    <!-- Alt kısımda vurgu noktası -->
+    <circle cx="100" cy="135" r="14" fill="#238636"/>
+</svg>
