@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hızlı Hesap — Glassmorphism Araçları</title>
+<meta name="description" content="Hızlı Hesap — Matematik, finans, BMI, yaş, zaman, birim ve döviz hesaplama araçları. 15+ modern hesaplama aracı.">
+<link rel="icon" href="logo.svg">
+
+<style>
+  :root{
+    --bg:#eef6fb; --glass-bg: rgba(255,255,255,0.55);
+    --glass-border: rgba(255,255,255,0.6);
+    --accent1: rgba(6,84,255,0.85);
+    --accent2: rgba(0,210,255,0.85);
+    --muted:#556070;
+    --radius:14px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    background: radial-gradient(1000px 600px at 10% 10%, #e9f5ff 0%, transparent 10%),
+                radial-gradient(800px 500px at 90% 90%, #f0f9ff 0%, transparent 12%),
+                var(--bg);
+    color:#051225;
+  }
+
+  header{
+    display:flex;align-items:center;gap:16px;
+    padding:22px 20px;
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:white;
+  }
+  .brand{display:flex;gap:12px;align-items:center}
+  .brand img{width:58px;height:58px;border-radius:12px}
+
+  .wrap{max-width:1100px;margin:20px auto;padding:18px}
+
+  .hero{
+    display:flex;gap:18px;align-items:center;padding:18px;border-radius:var(--radius);
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 30px rgba(11,20,40,0.06);
+    backdrop-filter: blur(8px) saturate(120%);
+  }
+  .hero-img{
+    width:240px;height:150px;object-fit:cover;border-radius:10px;flex-shrink:0
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;margin-top:20px
+  }
+  .tool-card{
+    padding:16px;border-radius:14px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.45));
+    border:1px solid var(--glass-border);
+    box-shadow: 0 8px 20px rgba(9,18,30,0.06);
+    cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:8px;
+  }
+  .tool-card:hover{
+    transform:translateY(-6px);box-shadow:0 18px 40px rgba(6,84,255,0.12)
+  }
+
+  .panel{
+    margin-top:25px;padding:18px;border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.4));
+    border:1px solid var(--glass-border);
+    box-shadow:0 12px 30px rgba(6,84,255,0.06)
+  }
+  .controls{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+
+  input, select{
+    width:100%;padding:10px;border-radius:10px;border:1px solid rgba(9,18,30,0.06);
+    background:rgba(255,255,255,0.85);font-size:15px;
+  }
+  button.btn{
+    padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:white;font-weight:700;cursor:pointer;
+  }
+  .result{
+    margin-top:12px;padding:12px;border-radius:10px;background:rgba(233,243,255,0.9);
+    border-left:4px solid var(--accent1);font-weight:700;color:#08306e;
+  }
+
+  @media(max-width:900px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:600px){
+    .grid{grid-template-columns:1fr}
+    .hero{flex-direction:column}
+  }
+</style>
+</head>
+
+<body>
+<header>
+  <div class="brand">
+    <img src="logo.svg" alt="Logo">
+    <div>
+      <h1 style="margin:0">Hızlı Hesap</h1>
+      <p style="margin:0;font-size:13px">Glassmorphism Dashboard — 15+ profesyonel hesaplama aracı</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <img class="hero-img" src="hero.jpg" alt="Hero">
+    <div>
+      <h2>Tüm hesaplama araçları tek yerde</h2>
+      <p>Matematik, finans, sağlıklı yaşam ve dönüşüm araçları. Hemen bir araç seç ve hesapla.</p>
+    </div>
+  </section>
+
+  <!-- Araçlar -->
+  <section class="grid">
+    <div class="tool-card" data-tool="basic"><h3>🧮 Dört İşlem</h3><p>Toplama, çıkarma, çarpma, bölme.</p></div>
+    <div class="tool-card" data-tool="percent"><h3>📊 Yüzde Hesaplama</h3><p>Artış, azalış ve yüzde değeri.</p></div>
+    <div class="tool-card" data-tool="bmi"><h3>⚖️ BMI</h3><p>Vücut kitle indeksi</p></div>
+    <div class="tool-card" data-tool="age"><h3>🎂 Yaş Hesaplama</h3><p>Gün, yıl, toplam süre.</p></div>
+    <div class="tool-card" data-tool="time"><h3>⏱ Zaman</h3><p>sn/dk/saat dönüşümleri.</p></div>
+  </section>
+
+  <!-- Panel -->
+  <section class="panel">
+    <h3 id="panel-title">Bir araç seçin</h3>
+    <div id="panel-body" style="margin-top:12px;color:#444">Yukarıdan bir kart seçin.</div>
+  </section>
+
+  <footer style="margin-top:30px;text-align:center;font-size:13px;color:var(--muted);">
+    © <span id="year"></span> Hızlı Hesap
+  </footer>
+
+</main>
+
+<script>
+document.getElementById("year").innerText = new Date().getFullYear();
+const panelTitle = document.getElementById("panel-title");
+const panel = document.getElementById("panel-body");
+
+document.querySelectorAll(".tool-card").forEach(c=>{
+  c.onclick = ()=> openTool(c.dataset.tool);
+});
+
+function openTool(t){
+
+  if(t==="basic"){
+    panelTitle.innerText="Dört İşlem";
+    panel.innerHTML=`
+      <div class="controls">
+        <input id="n1" type="number" placeholder="1. sayı">
+        <input id="n2" type="number" placeholder="2. sayı">
+      </div>
+      <button class="btn" onclick="calc('+')">Topla</button>
+      <button class="btn" onclick="calc('-')">Çıkar</button>
+      <button class="btn" onclick="calc('*')">Çarp</button>
+      <button class="btn" onclick="calc('/')">Böl</button>
+      <div id="res" class="result" style="display:none"></div>`;
+  }
+
+  if(t==="percent"){
+    panelTitle.innerText="Yüzde Hesaplama";
+    panel.innerHTML=`
+      <div class="controls">
+        <input id="p1" type="number" placeholder="Ana değer">
+        <input id="p2" type="number" placeholder="Yüzde (%)">
+      </div>
+      <button class="btn" onclick="percent()">Hesapla</button>
+      <div id="res" class="result" style="display:none"></div>`;
+  }
+
+  if(t==="bmi"){
+    panelTitle.innerText="BMI Hesaplama";
+    panel.innerHTML=`
+      <div class="controls">
+        <input id="w" type="number" placeholder="Kilo (kg)">
+        <input id="h" type="number" placeholder="Boy (cm)">
+      </div>
+      <button class="btn" onclick="bmi()">Hesapla</button>
+      <div id="res" class="result" style="display:none"></div>`;
+  }
+
+  if(t==="age"){
+    panelTitle.innerText="Yaş Hesaplama";
+    panel.innerHTML=`
+      <div class="controls">
+        <input id="d" type="date">
+      </div>
+      <button class="btn" onclick="age()">Hesapla</button>
+      <div id="res" class="result" style="display:none"></div>`;
+  }
+
+  if(t==="time"){
+    panelTitle.innerText="Zaman Dönüşümü";
+    panel.innerHTML=`
+      <div class="controls">
+        <input id="tv" type="number" placeholder="Değer">
+        <select id="tu"><option value="s">Saniye</option><option value="m">Dakika</option><option value="h">Saat</option></select>
+      </div>
+      <button class="btn" onclick="time()">Dönüştür</button>
+      <div id="res" class="result" style="display:none"></div>`;
+  }
+}
+
+function show(t){
+  const r=document.getElementById("res");
+  r.style.display="block";
+  r.innerHTML=t;
+}
+
+function calc(op){
+  let a=parseFloat(n1.value)||0;
+  let b=parseFloat(n2.value)||0;
+  if(op==="/" && b===0) return show("Sıfıra bölünmez");
+  show("Sonuç: "+eval(a+op+b));
+}
+
+function percent(){
+  let b=parseFloat(p1.value)||0;
+  let r=parseFloat(p2.value)||0;
+  show(r+"% = "+(b*r/100));
+}
+
+function bmi(){
+  let w=parseFloat(w.value)||0;
+  let hcm=parseFloat(h.value)||0;
+  let m=hcm/100; let b=w/(m*m);
+  show("BMI: "+b.toFixed(2));
+}
+
+function age(){
+  let d=new Date(document.getElementById("d").value);
+  if(!d) return;
+  let now=new Date();
+  let y=now.getFullYear()-d.getFullYear();
+  let m=now.getMonth()-d.getMonth();
+  if(m<0||(m===0&&now.getDate()<d.getDate())) y--;
+  show("Yaş: "+y);
+}
+
+function time(){
+  let v=parseFloat(tv.value)||0;
+  let u=tu.value;
+  let sec = (u==="s")?v:(u==="m"?v*60:v*3600);
+  let h = Math.floor(sec/3600);
+  let m = Math.floor((sec%3600)/60);
+  let s = sec%60;
+  show(`${v} ${u} = ${h} saat ${m} dk ${s} sn`);
+}
+</script>
+
+</body>
+</html>
