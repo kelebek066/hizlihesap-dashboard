@@ -1,45 +1,46 @@
-// ----------------------------------------------------
-//  LOGO SVG OTOMATİK OLUŞTURMA
-// ----------------------------------------------------
-const logoSVG = `
-<svg width="60" height="60" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="100" cy="100" r="90" stroke="#58a6ff" stroke-width="10"/>
-<path d="M60 110 L100 60 L140 110" stroke="#58a6ff" stroke-width="10" fill="none" stroke-linecap="round"/>
-<circle cx="100" cy="135" r="12" fill="#238636"/>
-</svg>
-`;
+// Dashboard yükleme simulasyonu
+document.addEventListener("DOMContentLoaded", () => {
+    const loading = document.querySelector(".loading-container");
+    const dashboard = document.querySelector(".dashboard");
 
-// SVG dosyasını otomatik oluşturup ekle
-const logoElement = document.querySelector(".logo img");
-const blob = new Blob([logoSVG], { type: "image/svg+xml" });
-const url = URL.createObjectURL(blob);
-logoElement.src = url;
+    setTimeout(() => {
+        loading.style.display = "none";
+        dashboard.style.display = "block";
+    }, 800);
+});
 
 
-// ----------------------------------------------------
-//  VERİ SİMÜLASYONU
-// ----------------------------------------------------
-const dataBox = document.getElementById("dataBox");
-const startBtn = document.getElementById("startSim");
+// Sol menü aç/kapa (mobil uyumlu)
+const menuBtn = document.querySelector(".menu-btn");
+const sidebar = document.querySelector(".sidebar");
 
-let interval;
-let running = false;
+if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+    });
+}
 
-startBtn.addEventListener("click", () => {
-    if (!running) {
-        running = true;
-        startBtn.innerText = "Simülasyon Çalışıyor...";
-        startBtn.disabled = true;
 
-        interval = setInterval(() => {
-            const value = (Math.random() * 100).toFixed(2);
+// Logo otomatik üretim **KALDIRILDI**
+// Çünkü artık manuel logo kullanıyorsun.
+// Hata vermesin diye bu bölüm tamamen temizlendi.
 
-            dataBox.textContent = "Yeni veri: " + value;
 
-            dataBox.classList.add("flash");
-            setTimeout(() => dataBox.classList.remove("flash"), 300);
+// Sayaç kutularında örnek animasyon
+const counters = document.querySelectorAll(".counter");
 
-        }, 900);
+counters.forEach(counter => {
+    let target = Number(counter.dataset.target);
+    let current = 0;
 
-    }
+    const update = () => {
+        current += Math.ceil(target / 50);
+        counter.innerText = current > target ? target : current;
+
+        if (current < target) {
+            requestAnimationFrame(update);
+        }
+    };
+
+    update();
 });
