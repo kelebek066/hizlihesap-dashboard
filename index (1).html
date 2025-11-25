@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Hızlı Hesap — Pro Dashboard</title>
+<link rel="icon" href="logo.svg">
+<style>
+:root{
+  --bg:#071021; --panel:#0b1220; --card:#0f1724; --text:#e6eef6;
+  --muted:#9aa4b2; --accent:#06b6d4; --accent2:#2dd4bf;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,#071021 0%,#0b1220 100%);color:var(--text)}
+.app{display:flex;min-height:100vh}
+
+/* Sidebar (Koyu Mat) */
+.sidebar{
+  width:260px;background:#071022;border-right:1px solid rgba(255,255,255,0.03);padding:20px;display:flex;flex-direction:column;
+}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.brand img{width:44px;height:44px;border-radius:8px}
+.brand h1{font-size:18px;margin:0}
+nav{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.nav-item{padding:10px 12px;border-radius:8px;color:var(--muted);display:flex;align-items:center;gap:10px;cursor:pointer}
+.nav-item:hover{background:rgba(255,255,255,0.02);color:#fff}
+.nav-item.active{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#041727;font-weight:700}
+.footer-small{margin-top:auto;font-size:13px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.02)}
+
+/* Main */
+.main{flex:1;padding:20px;overflow:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.topbar .left{display:flex;align-items:center;gap:12px}
+.btn{padding:8px 12px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent2),var(--accent));color:#041727;font-weight:700;cursor:pointer}
+.toggle-label{display:flex;align-items:center;gap:8px;color:var(--muted)}
+
+/* Hero */
+.hero{display:flex;gap:18px;align-items:center;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+.hero img{width:260px;height:140px;object-fit:cover;border-radius:10px}
+.hero h2{margin:0;color:var(--accent2)}
+.hero p{margin:6px 0 0;color:var(--muted)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+.card h3{margin:0;font-size:15px}
+.card p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+/* Panel */
+.panel{margin-top:18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+.input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text);margin-top:8px}
+
+/* Ads */
+.ads{margin-top:18px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px dashed rgba(255,255,255,0.03);color:var(--muted);text-align:center}
+
+/* responsive */
+@media (max-width:880px){
+  .sidebar{display:none}
+  .app{flex-direction:column}
+  main{margin-left:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" aria-label="Sidebar">
+    <div class="brand">
+      <img src="logo.svg" alt="Logo">
+      <div>
+        <h1>Hızlı Hesap</h1>
+        <div style="font-size:12px;color:var(--muted)">Dashboard</div>
+      </div>
+    </div>
+
+    <nav id="nav">
+      <div class="nav-item active" data-tool="home">Ana Sayfa</div>
+      <div class="nav-item" data-tool="math">Matematik</div>
+      <div class="nav-item" data-tool="finance">Finans</div>
+      <div class="nav-item" data-tool="health">Sağlık</div>
+      <div class="nav-item" data-tool="convert">Dönüştürücüler</div>
+      <div class="nav-item" data-tool="all">Tüm Araçlar</div>
+    </nav>
+
+    <div class="ads" style="font-size:13px">Reklam Alanı<br><small>AdSense / Sponsor</small></div>
+
+    <div class="footer-small">© <span id="year"></span> Hızlı Hesap</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="left">
+        <button id="menuBtn" class="btn" onclick="toggleSidebar()">☰</button>
+        <div style="font-weight:800">Dashboard</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <label class="toggle-label"><input id="darkToggle" type="checkbox" onchange="toggleDark(this.checked)"> Koyu Mod</label>
+      </div>
+    </div>
+
+    <section id="homePanel">
+      <div class="hero">
+        <img src="hero.jpg" alt="Hero">
+        <div>
+          <h2>Hızlı Hesap — Tüm Araçlar</h2>
+          <p>Matematikten finansa, sağlıktan dönüştürücülere kadar 15 profesyonel araç.</p>
+        </div>
+      </div>
+
+      <div class="grid" id="cardGrid"></div>
+    </section>
+
+    <section id="toolPanel" class="panel" style="display:none">
+      <div id="toolTitle" style="font-size:18px;font-weight:700">Araç</div>
+      <div id="toolBody" style="margin-top:12px">Aracı seçin.</div>
+    </section>
+
+    <div class="ads" id="bottomAd">Alt reklam alanı (AdSense buraya)</div>
+  </main>
+</div>
+
+<script>
+/* ---- Initialization ---- */
+document.getElementById('year').innerText = new Date().getFullYear();
+const cards = [
+  {id:'basic',title:'Dört İşlem',desc:'Topla, çıkar, çarp, böl'},
+  {id:'advanced',title:'Gelişmiş Matematik',desc:'Karekök, üs, mod, yüzde'},
+  {id:'credit',title:'Kredi Hesaplama',desc:'Aylık taksit ve toplam maliyet'},
+  {id:'interest',title:'Faiz Hesaplama',desc:'Basit & Bileşik faiz'},
+  {id:'salary',title:'Maaş & Vergi',desc:'Brüt → Net tahmini'},
+  {id:'bmi',title:'BMI',desc:'Vücut kitle indeksi'},
+  {id:'age',title:'Yaş Hesaplama',desc:'Doğum tarihine göre yaş'},
+  {id:'time',title:'Zaman Dönüştürücü',desc:'Saniye/dakika/saat dönüşümü'},
+  {id:'currency',title:'Döviz Dönüştürücü',desc:'Manuel kur ile dönüşüm'},
+  {id:'unit',title:'Birim Dönüştürücü',desc:'cm↔m, kg↔g vb.'},
+  {id:'percent',title:'Yüzde Hesaplama',desc:'Yüzde ve fark hesapla'},
+  {id:'mod',title:'Mod / Kalan',desc:'Mod alma işlemi'},
+  {id:'sqrt',title:'Karekök',desc:'Tek sayı karekökü'},
+  {id:'power',title:'Üs Alma',desc:'Taban^üs hesaplama'},
+  {id:'calc',title:'Hızlı Hesap Makinesi',desc:'Basit ifadeler (+ - * /)'}
+];
+
+const grid = document.getElementById('cardGrid');
+cards.forEach(c=>{
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `<h3>${c.title}</h3><p>${c.desc}</p>`;
+  el.onclick = ()=> openTool(c.id);
+  grid.appendChild(el);
+});
+
+/* ---- Sidebar / Nav ---- */
+document.querySelectorAll('.nav-item').forEach(n=>{
+  n.addEventListener('click', ()=> {
+    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+    n.classList.add('active');
+    const tool = n.getAttribute('data-tool');
+    if(tool==='home'){ showHome(); }
+    else if(tool==='math'){ openTool('advanced'); }
+    else if(tool==='finance'){ openTool('credit'); }
+    else if(tool==='health'){ openTool('bmi'); }
+    else if(tool==='convert'){ openTool('unit'); }
+    else if(tool==='all'){ showAll(); }
+  });
+});
+
+function toggleSidebar(){
+  const sb = document.querySelector('.sidebar');
+  if(getComputedStyle(sb).display==='none') sb.style.display='flex'; else sb.style.display='none';
+}
+
+/* ---- Dark Mode ---- */
+function toggleDark(checked){
+  if(checked) document.documentElement.style.setProperty('--bg','#020306');
+  else document.documentElement.style.setProperty('--bg','#071021');
+  document.body.classList.toggle('dark', checked);
+  // adjust minor colors if needed
+}
+
+/* ---- View helpers ---- */
+function showHome(){
+  document.getElementById('homePanel').style.display='block';
+  document.getElementById('toolPanel').style.display='none';
+}
+function showAll(){
+  document.getElementById('homePanel').style.display='block';
+  document.getElementById('toolPanel').style.display='none';
+}
+
+/* ---- Open tool and render UI ---- */
+function openTool(id){
+  showToolPanel();
+  const title = document.getElementById('toolTitle');
+  const body = document.getElementById('toolBody');
+  const card = cards.find(c=>c.id===id);
+  title.innerText = card ? card.title : id;
+  body.innerHTML = ''; // reset
+
+  if(id==='basic'){
+    body.innerHTML = `
+      <input id="b1" class="input" type="number" placeholder="1. sayı">
+      <input id="b2" class="input" type="number" placeholder="2. sayı">
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" onclick="basicOp('+')">Topla</button>
+        <button class="btn" onclick="basicOp('-')">Çıkar</button>
+        <button class="btn" onclick="basicOp('*')">Çarp</button>
+        <button class="btn" onclick="basicOp('/')">Böl</button>
+      </div>
+      <div id="res-basic" class="result" style="display:none"></div>
+    `;
+  } else if(id==='advanced'){
+    body.innerHTML = `
+      <input id="adv-x" class="input" type="number" placeholder="Değer">
+      <input id="adv-y" class="input" type="number" placeholder="Üs / Mod / Yüzde (opsiyon)">
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn" onclick="doSqrtUI()">Karekök</button>
+        <button class="btn" onclick="doPowerUI()">Üs Al</button>
+        <button class="btn" onclick="doModUI()">Mod</button>
+        <button class="btn" onclick="doPercentUI()">Yüzde</button>
+      </div>
+      <div id="res-adv" class="result" style="display:none"></div>
+    `;
+  } else if(id==='credit'){
+    body.innerHTML = `
+      <input id="cr-amount" class="input" type="number" placeholder="Kredi tutarı (₺)">
+      <input id="cr-rate" class="input" type="number" placeholder="Yıllık faiz (%)">
+      <input id="cr-months" class="input" type="number" placeholder="Vade (ay)">
+      <button class="btn" onclick="doCredit()">Aylık Taksit Hesapla</button>
+      <div id="res-credit" class="result" style="display:none"></div>
+    `;
+  } else if(id==='interest'){
+    body.innerHTML = `
+      <input id="in-principal" class="input" type="number" placeholder="Ana para (₺)">
+      <input id="in-rate" class="input" type="number" placeholder="Yıllık oran (%)">
+      <input id="in-years" class="input" type="number" placeholder="Yıl sayısı">
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" onclick="doSimpleInterest()">Basit Faiz</button>
+        <button class="btn" onclick="doCompoundInterest()">Bileşik Faiz</button>
+      </div>
+      <div id="res-interest" class="result" style="display:none"></div>
+    `;
+  } else if(id==='salary'){
+    body.innerHTML = `
+      <input id="sal-gross" class="input" type="number" placeholder="Brüt maaş (₺)">
+      <input id="sal-tax" class="input" type="number" placeholder="Vergi oranı (%)">
+      <input id="sal-ss" class="input" type="number" placeholder="SGK (%)">
+      <button class="btn" onclick="doSalary()">Net Hesapla</button>
+      <div id="res-salary" class="result" style="display:none"></div>
+    `;
+  } else if(id==='bmi'){
+    body.innerHTML = `
+      <input id="bmi-w" class="input" type="number" placeholder="Kilo (kg)">
+      <input id="bmi-h" class="input" type="number" placeholder="Boy (cm)">
+      <button class="btn" onclick="doBMI()">Hesapla</button>
+      <div id="res-bmi" class="result" style="display:none"></div>
+    `;
+  } else if(id==='age'){
+    body.innerHTML = `
+      <input id="age-date" class="input" type="date" placeholder="Doğum tarihi">
+      <button class="btn" onclick="doAge()">Yaşı Hesapla</button>
+      <div id="res-age" class="result" style="display:none"></div>
+    `;
+  } else if(id==='time'){
+    body.innerHTML = `
+      <input id="t-val" class="input" type="number" placeholder="Değer">
+      <select id="t-unit" class="input"><option value="s">Saniye</option><option value="m">Dakika</option><option value="h">Saat</option></select>
+      <button class="btn" onclick="doTime()">Dönüştür</button>
+      <div id="res-time" class="result" style="display:none"></div>
+    `;
+  } else if(id==='currency'){
+    body.innerHTML = `
+      <input id="cur-amt" class="input" type="number" placeholder="Tutar">
+      <input id="cur-rate" class="input" type="number" placeholder="Kur (1 birim = ? TL)">
+      <select id="cur-dir" class="input"><option value="toTL">Döviz → TL</option><option value="toFX">TL → Döviz</option></select>
+      <button class="btn" onclick="doCurrency()">Dönüştür</button>
+      <div id="res-currency" class="result" style="display:none"></div>
+    `;
+  } else if(id==='unit'){
+    body.innerHTML = `
+      <select id="unit-type" class="input"><option value="cm-m">cm ↔ m</option><option value="m-cm">m ↔ cm</option><option value="kg-g">kg ↔ g</option></select>
+      <input id="unit-val" class="input" type="number" placeholder="Değer">
+      <button class="btn" onclick="doUnit()">Dönüştür</button>
+      <div id="res-unit" class="result" style="display:none"></div>
+    `;
+  } else if(id==='percent'){
+    body.innerHTML = `
+      <input id="per-base" class="input" type="number" placeholder="Ana değer">
+      <input id="per-rate" class="input" type="number" placeholder="Yüzde (%)">
+      <button class="btn" onclick="doPercent()">Hesapla</button>
+      <div id="res-percent" class="result" style="display:none"></div>
+    `;
+  } else if(id==='mod'){
+    body.innerHTML = `
+      <input id="mod-a" class="input" type="number" placeholder="Bölünen">
+      <input id="mod-b" class="input" type="number" placeholder="Bölen">
+      <button class="btn" onclick="doMod()">Hesapla</button>
+      <div id="res-mod" class="result" style="display:none"></div>
+    `;
+  } else if(id==='sqrt'){
+    body.innerHTML = `
+      <input id="sqrt-x" class="input" type="number" placeholder="Değer">
+      <button class="btn" onclick="doSqrt()">Hesapla</button>
+      <div id="res-sqrt" class="result" style="display:none"></div>
+    `;
+  } else if(id==='power'){
+    body.innerHTML = `
+      <input id="pow-x" class="input" type="number" placeholder="Taban">
+      <input id="pow-y" class="input" type="number" placeholder="Üs">
+      <button class="btn" onclick="doPower()">Hesapla</button>
+      <div id="res-pow" class="result" style="display:none"></div>
+    `;
+  } else if(id==='calc'){
+    body.innerHTML = `
+      <input id="expr" class="input" type="text" placeholder="Örn: 12+3*2 (yalnızca + - * / ( ) . ve rakam)">
+      <button class="btn" onclick="doCalc()">Hesapla</button>
+      <div id="res-calc" class="result" style="display:none"></div>
+    `;
+  } else {
+    body.innerHTML = '<p>Bu araç henüz hazır değil.</p>';
+  }
+}
+
+/* ---- Calculation functions ---- */
+function basicOp(op){
+  const a = parseFloat(document.getElementById('b1').value)||0;
+  const b = parseFloat(document.getElementById('b2').value)||0;
+  let r=0;
+  if(op==='+') r=a+b;
+  if(op==='-') r=a-b;
+  if(op==='*') r=a*b;
+  if(op==='/') r=b===0?'Sıfıra bölünemez':(a/b);
+  const el=document.getElementById('res-basic'); if(!el) return;
+  el.style.display='block'; el.innerText='Sonuç: '+r;
+}
+function doSqrtUI(){ const x=parseFloat(document.getElementById('adv-x').value)||0; showRes('res-adv','Karekök: '+Math.sqrt(x)); }
+function doPowerUI(){ const x=parseFloat(document.getElementById('adv-x').value)||0; const y=parseFloat(document.getElementById('adv-y').value)||2; showRes('res-adv',x+'^'+y+' = '+Math.pow(x,y)); }
+function doModUI(){ const x=parseFloat(document.getElementById('adv-x').value)||0; const y=parseFloat(document.getElementById('adv-y').value)||1; showRes('res-adv','Mod: '+(x%y)); }
+function doPercentUI(){ const x=parseFloat(document.getElementById('adv-x').value)||0; const p=parseFloat(document.getElementById('adv-y').value)||0; showRes('res-adv',p+'% of '+x+' = '+(x*p/100)); }
+
+function doCredit(){
+  const amount=parseFloat(document.getElementById('cr-amount').value)||0;
+  const annual=parseFloat(document.getElementById('cr-rate').value)||0;
+  const months=parseInt(document.getElementById('cr-months').value)||1;
+  const monthlyRate=annual/100/12;
+  let monthly = monthlyRate===0?amount/months:(amount*monthlyRate)/(1-Math.pow(1+monthlyRate,-months));
+  const total=monthly*months;
+  showRes('res-credit','Aylık: '+monthly.toFixed(2)+' ₺ — Toplam: '+total.toFixed(2)+' ₺');
+}
+
+function doSimpleInterest(){
+  const P=parseFloat(document.getElementById('in-principal').value)||0;
+  const r=parseFloat(document.getElementById('in-rate').value)||0;
+  const t=parseFloat(document.getElementById('in-years').value)||0;
+  const interest=P*r/100*t;
+  showRes('res-interest','Basit faiz: '+interest.toFixed(2)+' — Toplam: '+(P+interest).toFixed(2));
+}
+function doCompoundInterest(){
+  const P=parseFloat(document.getElementById('in-principal').value)||0;
+  const r=parseFloat(document.getElementById('in-rate').value)||0;
+  const t=parseFloat(document.getElementById('in-years').value)||0;
+  const n=1;
+  const A=P*Math.pow(1+(r/100)/n,n*t);
+  showRes('res-interest','Bileşik faiz toplam: '+A.toFixed(2));
+}
+
+function doSalary(){
+  const gross=parseFloat(document.getElementById('sal-gross').value)||0;
+  const tax=parseFloat(document.getElementById('sal-tax').value)||0;
+  const ss=parseFloat(document.getElementById('sal-ss').value)||0;
+  const taxAmt=gross*tax/100; const ssAmt=gross*ss/100; const net=gross-taxAmt-ssAmt;
+  showRes('res-salary','Net maaş (tahmini): '+net.toFixed(2)+' ₺ (Vergi: '+taxAmt.toFixed(2)+', SGK: '+ssAmt.toFixed(2)+')');
+}
+
+function doBMI(){
+  const w=parseFloat(document.getElementById('bmi-w').value)||0; const h=parseFloat(document.getElementById('bmi-h').value)||0;
+  if(!w||!h){ showRes('res-bmi','Lütfen kilo ve boy girin'); return; }
+  const m=h/100; const bmi=w/(m*m); let c='Normal'; if(bmi<18.5) c='Zayıf'; else if(bmi<25) c='Normal'; else if(bmi<30) c='Fazla kilolu'; else c='Obez';
+  showRes('res-bmi','BMI: '+bmi.toFixed(2)+' — '+c);
+}
+
+function doAge(){
+  const d=document.getElementById('age-date').value; if(!d){ showRes('res-age','Tarih girin'); return; }
+  const dob=new Date(d); const now=new Date(); let years=now.getFullYear()-dob.getFullYear(); const m=now.getMonth()-dob.getMonth();
+  if(m<0 || (m===0 && now.getDate()<dob.getDate())) years--; const diff=now-dob; const days=Math.floor(diff/(1000*60*60*24));
+  showRes('res-age','Yaş: '+years+' — Toplam gün: '+days);
+}
+
+function doTime(){
+  const v=parseFloat(document.getElementById('t-val').value)||0; const u=document.getElementById('t-unit').value;
+  let sec=(u==='s')?v:(u==='m')?v*60:v*3600; const h=Math.floor(sec/3600); const m=Math.floor((sec%3600)/60); const s=Math.floor(sec%60);
+  showRes('res-time',v+' '+u+' = '+h+' saat '+m+' dakika '+s+' saniye');
+}
+
+function doCurrency(){
+  const amt=parseFloat(document.getElementById('cur-amt').value)||0; const rate=parseFloat(document.getElementById('cur-rate').value)||1; const dir=document.getElementById('cur-dir').value;
+  if(dir==='toTL') showRes('res-currency', amt+' birim = '+(amt*rate).toFixed(2)+' ₺'); else showRes('res-currency', amt+' ₺ = '+(rate===0?'Geçersiz kur':(amt/rate).toFixed(4))+' birim');
+}
+
+function doUnit(){
+  const t=document.getElementById('unit-type').value; const v=parseFloat(document.getElementById('unit-val').value)||0;
+  if(t==='cm-m') showRes('res-unit', v+' cm = '+(v/100)+' m'); if(t==='m-cm') showRes('res-unit', v+' m = '+(v*100)+' cm'); if(t==='kg-g') showRes('res-unit', v+' kg = '+(v*1000)+' g');
+}
+
+function doPercent(){
+  const base=parseFloat(document.getElementById('per-base').value)||0; const rate=parseFloat(document.getElementById('per-rate').value)||0;
+  const val=base*rate/100; showRes('res-percent', rate+'% of '+base+' = '+val);
+}
+
+function doMod(){
+  const a=parseFloat(document.getElementById('mod-a').value)||0; const b=parseFloat(document.getElementById('mod-b').value)||1;
+  showRes('res-mod','Kalan: '+(a % b));
+}
+
+function doSqrt(){ const x=parseFloat(document.getElementById('sqrt-x').value)||0; showRes('res-sqrt','Karekök: '+Math.sqrt(x)); }
+function doPower(){ const x=parseFloat(document.getElementById('pow-x').value)||0; const y=parseFloat(document.getElementById('pow-y').value)||0; showRes('res-pow', x+'^'+y+' = '+Math.pow(x,y)); }
+
+function doCalc(){
+  const expr=(document.getElementById('expr')?document.getElementById('expr').value:'')||'';
+  if(!/^[0-9+\-*/().\s]+$/.test(expr)){ showRes('res-calc','Geçersiz ifade'); return; }
+  try{ const v=eval(expr); showRes('res-calc','Sonuç: '+v); }catch(e){ showRes('res-calc','Hesaplama hatası'); }
+}
+
+/* helper to show result */
+function showRes(id, txt){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.style.display='block';
+  el.innerText=txt;
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+/* show tool panel */
+function showToolPanel(){ document.getElementById('homePanel').style.display='none'; document.getElementById('toolPanel').style.display='block'; window.scrollTo({top:document.getElementById('toolPanel').offsetTop-20, behavior:'smooth'}); }
+
+/* quick init: show home */
+showHome();
+</script>
+</body>
+</html>
