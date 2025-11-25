@@ -1,1 +1,1 @@
-console.log('Dashboard loaded');
+js/app.js
