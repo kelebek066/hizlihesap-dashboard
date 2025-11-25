@@ -1,4 +1,6 @@
-/* === GENEL AYARLAR === */
+/* ----------------------------------------------------
+   GENEL AYARLAR
+---------------------------------------------------- */
 * {
     margin: 0;
     padding: 0;
@@ -6,34 +8,132 @@
 }
 
 body {
-    background: #121212;
-    color: #ffffff;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
 }
 
-/* === ÜST BAR === */
+/* ----------------------------------------------------
+   HEADER
+---------------------------------------------------- */
 .header {
+    width: 100%;
+    padding: 20px 40px;
+    background: #161b22;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 1px solid #30363d;
+}
+
+.logo img {
+    width: 55px;
+    height: auto;
+}
+
+.nav a {
+    color: #e6edf3;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav a:hover {
+    color: #58a6ff;
+}
+
+/* ----------------------------------------------------
+   HERO BÖLÜMÜ
+---------------------------------------------------- */
+.hero {
+    text-align: center;
+    padding: 120px 20px;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    animation: fadeIn 1.8s ease forwards;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #58a6ff;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #238636;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #2ea043;
+}
+
+/* ----------------------------------------------------
+   VERİ BÖLÜMÜ
+---------------------------------------------------- */
+.data-section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.data-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    padding: 30px;
+    width: 300px;
+    margin: 20px auto;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    box-shadow: 0px 0px 25px rgba(88, 166, 255, 0.1);
+}
+
+.data-box.flash {
+    background: #238636;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* ----------------------------------------------------
+   HAKKINDA
+---------------------------------------------------- */
+.about {
+    padding: 80px 20px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+/* ----------------------------------------------------
+   FOOTER
+---------------------------------------------------- */
+footer {
     padding: 20px;
-    background: #1e1e1e;
-    border-bottom: 2px solid #6a00ff;
+    text-align: center;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+    margin-top: 60px;
 }
 
-.logo {
-    width: 48px;
-    height: 48px;
-}
-
-/* === BAŞLIK === */
-h1 {
-    font-size: 28px;
-    color: #d8b6ff;
-}
-
-/* === YÜKLEME METNİ === */
-.loading {
-    font-size: 22px;
-    padding: 40px 20px;
+/* ----------------------------------------------------
+   ANİMASYONLAR
+---------------------------------------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
