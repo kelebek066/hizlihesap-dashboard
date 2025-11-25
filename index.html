@@ -3,23 +3,49 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HızlıHesap Dashboard</title>
-
-    <!-- CSS -->
+    <title>Proje</title>
     <link rel="stylesheet" href="style.css" />
-</head>
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
 <body>
     <header class="header">
-        <img src="logo.svg" class="logo" alt="Logo">
-        <h1>HızlıHesap Dashboard</h1>
+        <div class="logo">
+            <!-- SVG Logoyu app.js tamamlanınca buraya otomatik ekleyeceğiz -->
+            <img src="logo.svg" alt="Logo" />
+        </div>
+        <nav class="nav">
+            <a href="#">Ana Sayfa</a>
+            <a href="#hakkinda">Hakkında</a>
+            <a href="#veri">Veri Simülasyonu</a>
+        </nav>
     </header>
 
-    <main>
-        <p class="loading">Dashboard yükleniyor...</p>
-    </main>
+    <section class="hero">
+        <h1>Modern Web Projesi</h1>
+        <p>Bu proje, animasyonlar ve gerçek zamanlı veri simülasyonu içerir.</p>
+        <button id="startSim" class="btn">Simülasyonu Başlat</button>
+    </section>
 
-    <!-- JS -->
+    <section id="veri" class="data-section">
+        <h2>Gerçek Zamanlı Veri</h2>
+        <div id="dataBox" class="data-box">Veri bekleniyor...</div>
+    </section>
+
+    <section id="hakkinda" class="about">
+        <h2>Hakkında</h2>
+        <p>
+            Bu proje, modern HTML – CSS – JavaScript altyapısıyla hazırlanmış profesyonel bir demo uygulamasıdır.
+            Animasyonlar, dinamik veriler ve responsive tasarım içerir.
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2025 Web Projesi</p>
+    </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
