@@ -3,256 +3,578 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Hızlı Hesap — Glassmorphism Araçları</title>
-<meta name="description" content="Hızlı Hesap — Matematik, finans, BMI, yaş, zaman, birim ve döviz hesaplama araçları. 15+ modern hesaplama aracı.">
+<title>Hızlı Hesap — Profesyonel Hesaplama Paneli</title>
+<meta name="description" content="Hızlı Hesap — 15+ gelişmiş hesaplama aracı: dört işlem, kredi, faiz, BMI, yaş, zaman dönüştürücü, birim dönüşümü ve daha fazlası.">
 <link rel="icon" href="logo.svg">
 
 <style>
-  :root{
-    --bg:#eef6fb; --glass-bg: rgba(255,255,255,0.55);
-    --glass-border: rgba(255,255,255,0.6);
-    --accent1: rgba(6,84,255,0.85);
-    --accent2: rgba(0,210,255,0.85);
-    --muted:#556070;
-    --radius:14px;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    min-height:100vh;
-    background: radial-gradient(1000px 600px at 10% 10%, #e9f5ff 0%, transparent 10%),
-                radial-gradient(800px 500px at 90% 90%, #f0f9ff 0%, transparent 12%),
-                var(--bg);
-    color:#051225;
-  }
+:root{
+  --bg:#eef6fb;
+  --glass-bg:rgba(255,255,255,0.55);
+  --glass-border:rgba(255,255,255,0.6);
+  --accent1:rgba(6,84,255,0.85);
+  --accent2:rgba(0,210,255,0.85);
+  --muted:#555;
+  --radius:14px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto;
+}
 
-  header{
-    display:flex;align-items:center;gap:16px;
-    padding:22px 20px;
-    background:linear-gradient(90deg,var(--accent1),var(--accent2));
-    color:white;
-  }
-  .brand{display:flex;gap:12px;align-items:center}
-  .brand img{width:58px;height:58px;border-radius:12px}
+body{
+  margin:0;
+  background: var(--bg);
+}
 
-  .wrap{max-width:1100px;margin:20px auto;padding:18px}
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 26px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  color:white;
+  box-shadow:0 4px 14px rgba(0,0,0,0.15);
+}
+nav .brand{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700}
+nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+nav ul li a{color:white;text-decoration:none;font-weight:500;opacity:.9}
+nav ul li a:hover{opacity:1}
 
-  .hero{
-    display:flex;gap:18px;align-items:center;padding:18px;border-radius:var(--radius);
-    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 10px 30px rgba(11,20,40,0.06);
-    backdrop-filter: blur(8px) saturate(120%);
-  }
-  .hero-img{
-    width:240px;height:150px;object-fit:cover;border-radius:10px;flex-shrink:0
-  }
+/* HERO */
+.hero{
+  display:flex;
+  gap:26px;
+  align-items:center;
+  max-width:1200px;
+  margin:26px auto;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  padding:26px;
+  border-radius:var(--radius);
+  backdrop-filter:blur(10px);
+  box-shadow:0 12px 35px rgba(0,0,0,0.07);
+}
 
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;margin-top:20px
-  }
-  .tool-card{
-    padding:16px;border-radius:14px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.45));
-    border:1px solid var(--glass-border);
-    box-shadow: 0 8px 20px rgba(9,18,30,0.06);
-    cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:8px;
-  }
-  .tool-card:hover{
-    transform:translateY(-6px);box-shadow:0 18px 40px rgba(6,84,255,0.12)
-  }
+.hero img{
+  width:340px;
+  height:200px;
+  object-fit:cover;
+  border-radius:14px;
+}
 
-  .panel{
-    margin-top:25px;padding:18px;border-radius:14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.4));
-    border:1px solid var(--glass-border);
-    box-shadow:0 12px 30px rgba(6,84,255,0.06)
-  }
-  .controls{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.hero h2{
+  margin:0;
+  font-size:28px;
+  color:#08306e;
+}
 
-  input, select{
-    width:100%;padding:10px;border-radius:10px;border:1px solid rgba(9,18,30,0.06);
-    background:rgba(255,255,255,0.85);font-size:15px;
-  }
-  button.btn{
-    padding:10px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent1),var(--accent2));
-    color:white;font-weight:700;cursor:pointer;
-  }
-  .result{
-    margin-top:12px;padding:12px;border-radius:10px;background:rgba(233,243,255,0.9);
-    border-left:4px solid var(--accent1);font-weight:700;color:#08306e;
-  }
+.hero p{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:16px;
+  max-width:440px;
+}
 
-  @media(max-width:900px){
-    .grid{grid-template-columns:repeat(2,1fr)}
-  }
-  @media(max-width:600px){
-    .grid{grid-template-columns:1fr}
-    .hero{flex-direction:column}
-  }
+/* GRID */
+.grid{
+  max-width:1200px;
+  margin:0 auto;
+  padding:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.tool-card{
+  padding:18px;
+  border-radius:14px;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+.tool-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 35px rgba(6,84,255,0.15);
+}
+
+.tool-card h3{
+  margin:0;
+  font-size:18px;
+  color:#08306e;
+}
+
+.tool-card p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* PANEL */
+.panel{
+  max-width:1200px;
+  margin:26px auto;
+  background:var(--glass-bg);
+  border-radius:14px;
+  padding:26px;
+  border:1px solid var(--glass-border);
+  box-shadow:0 12px 35px rgba(0,0,0,0.07);
+  backdrop-filter:blur(10px);
+}
+
+.panel .head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.panel h3{
+  margin:0;
+  font-size:22px;
+  color:#08306e;
+}
+
+.controls{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+
+input,select{
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
+
+button.btn{
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  border:0;
+  padding:12px 16px;
+  color:white;
+  font-weight:700;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(6,84,255,0.14);
+}
+
+.result{
+  margin-top:14px;
+  padding:16px;
+  background:rgba(233,243,255,0.9);
+  border-left:5px solid var(--accent1);
+  font-weight:700;
+  border-radius:8px;
+}
 </style>
 </head>
-
 <body>
-<header>
+
+<!-- NAVBAR -->
+<nav>
   <div class="brand">
-    <img src="logo.svg" alt="Logo">
+    <img src="logo.svg" alt="logo" style="width:52px;height:52px;border-radius:10px;background:rgba(255,255,255,0.08);padding:6px">
     <div>
-      <h1 style="margin:0">Hızlı Hesap</h1>
-      <p style="margin:0;font-size:13px">Glassmorphism Dashboard — 15+ profesyonel hesaplama aracı</p>
+      <div style="font-weight:800;font-size:18px">Hızlı Hesap</div>
+      <div style="font-size:13px;opacity:.9">Profesyonel hesaplama araçları</div>
     </div>
   </div>
-</header>
 
-<main class="wrap">
+  <ul>
+    <li><a href="#" onclick="showHome()">Ana Sayfa</a></li>
+    <li><a href="#about">Hakkında</a></li>
+    <li><a href="#contact">İletişim</a></li>
+  </ul>
+</nav>
 
-  <section class="hero">
-    <img class="hero-img" src="hero.jpg" alt="Hero">
-    <div>
-      <h2>Tüm hesaplama araçları tek yerde</h2>
-      <p>Matematik, finans, sağlıklı yaşam ve dönüşüm araçları. Hemen bir araç seç ve hesapla.</p>
+<!-- HERO -->
+<section class="hero" aria-label="Hero">
+  <img src="hero.jpg" alt="Hero görseli">
+  <div>
+    <h2>Hızlı Hesap — Tüm araçlar tek panelde</h2>
+    <p>Matematikten finansa, sağlıktan dönüştürücülere kadar 15+ araç. Hemen bir kart seç ve hesapla.</p>
+    <div style="margin-top:14px">
+      <button class="btn" onclick="showAll()">Tüm Araçları Gör</button>
+      <button class="btn" style="background:transparent;border:1px solid rgba(6,84,255,0.08);margin-left:8px" onclick="document.getElementById('bottomAd').scrollIntoView()">Reklam Alanı</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Araçlar -->
-  <section class="grid">
-    <div class="tool-card" data-tool="basic"><h3>🧮 Dört İşlem</h3><p>Toplama, çıkarma, çarpma, bölme.</p></div>
-    <div class="tool-card" data-tool="percent"><h3>📊 Yüzde Hesaplama</h3><p>Artış, azalış ve yüzde değeri.</p></div>
-    <div class="tool-card" data-tool="bmi"><h3>⚖️ BMI</h3><p>Vücut kitle indeksi</p></div>
-    <div class="tool-card" data-tool="age"><h3>🎂 Yaş Hesaplama</h3><p>Gün, yıl, toplam süre.</p></div>
-    <div class="tool-card" data-tool="time"><h3>⏱ Zaman</h3><p>sn/dk/saat dönüşümleri.</p></div>
-  </section>
+<!-- CARDS GRID -->
+<section class="grid" id="grid">
+  <!-- kartlar JS ile oluşturulacak -->
+</section>
 
-  <!-- Panel -->
-  <section class="panel">
-    <h3 id="panel-title">Bir araç seçin</h3>
-    <div id="panel-body" style="margin-top:12px;color:#444">Yukarıdan bir kart seçin.</div>
-  </section>
+<!-- PANEL (Araç içeriği) -->
+<section class="panel" id="panel" style="display:none">
+  <div class="head">
+    <h3 id="panelTitle">Araç</h3>
+    <div><small style="color:var(--muted)">İşlemi yapıp sonucu görebilirsiniz</small></div>
+  </div>
+  <div id="panelBody" style="margin-top:12px">Bir araç seçin.</div>
+</section>
 
-  <footer style="margin-top:30px;text-align:center;font-size:13px;color:var(--muted);">
-    © <span id="year"></span> Hızlı Hesap
-  </footer>
+<!-- BOTTOM AD / FOOTER -->
+<div id="bottomAd" class="panel" style="margin-top:18px">
+  <strong>Reklam / Sponsor Alanı</strong>
+  <div style="margin-top:8px;color:var(--muted)">Google AdSense veya sponsor banner yerleştirin.</div>
+</div>
 
-</main>
+<footer style="max-width:1200px;margin:22px auto;padding:12px;color:var(--muted);font-size:13px;text-align:center">
+  © <span id="year"></span> Hızlı Hesap — Tüm hakları saklıdır.
+</footer>
 
 <script>
-document.getElementById("year").innerText = new Date().getFullYear();
-const panelTitle = document.getElementById("panel-title");
-const panel = document.getElementById("panel-body");
+// --- Genel Init ---
+document.getElementById('year').innerText = new Date().getFullYear();
 
-document.querySelectorAll(".tool-card").forEach(c=>{
-  c.onclick = ()=> openTool(c.dataset.tool);
+const tools = [
+  {id:'basic', title:'Dört İşlem', desc:'Topla, çıkar, çarp, böl'},
+  {id:'percent', title:'Yüzde Hesaplama', desc:'Artış/azalış ve yüzde değeri'},
+  {id:'bmi', title:'BMI', desc:'Vücut kitle indeksi'},
+  {id:'age', title:'Yaş Hesaplama', desc:'Doğum tarihine göre yaş'},
+  {id:'time', title:'Zaman Dönüştürücü', desc:'Saniye/dakika/saat'},
+  {id:'advanced', title:'Gelişmiş Matematik', desc:'Karekök, üs, mod'},
+  {id:'credit', title:'Kredi Hesaplama', desc:'Aylık taksit ve toplam maliyet'},
+  {id:'interest', title:'Faiz Hesaplama', desc:'Basit & Bileşik faiz'},
+  {id:'salary', title:'Maaş Hesaplama', desc:'Brüt → Net tahmini'},
+  {id:'currency', title:'Döviz Dönüştürücü', desc:'Manuel kur ile dönüşüm'},
+  {id:'unit', title:'Birim Dönüştürücü', desc:'cm↔m, kg↔g'},
+  {id:'mod', title:'Mod / Kalan', desc:'Mod işlemi'},
+  {id:'sqrt', title:'Karekök', desc:'Tek sayı için karekök'},
+  {id:'power', title:'Üs Alma', desc:'Taban^üs hesaplama'},
+  {id:'calc', title:'Hızlı Hesap Makinesi', desc:'Basit ifade hesaplama (+ - * /)'}
+];
+
+// kartları render et
+const gridEl = document.getElementById('grid');
+tools.forEach(t=>{
+  const card = document.createElement('div');
+  card.className = 'tool-card';
+  card.setAttribute('data-tool', t.id);
+  card.innerHTML = `<h3>${t.title}</h3><p>${t.desc}</p>`;
+  card.onclick = ()=> openTool(t.id);
+  gridEl.appendChild(card);
 });
 
-function openTool(t){
+// Görünümler
+function showHome(){
+  document.getElementById('panel').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function showAll(){
+  document.getElementById('panel').style.display = 'none';
+  gridEl.scrollIntoView({behavior:'smooth'});
+}
 
-  if(t==="basic"){
-    panelTitle.innerText="Dört İşlem";
-    panel.innerHTML=`
+// Araç açma fonksiyonu
+function openTool(id){
+  document.getElementById('panel').style.display = 'block';
+  const titleEl = document.getElementById('panelTitle');
+  const bodyEl = document.getElementById('panelBody');
+  const t = tools.find(x=>x.id===id);
+  titleEl.innerText = t ? t.title : id;
+  bodyEl.innerHTML = '';
+
+  // ********** BASIC (Dört İşlem) **********
+  if(id === 'basic'){
+    bodyEl.innerHTML = `
       <div class="controls">
-        <input id="n1" type="number" placeholder="1. sayı">
-        <input id="n2" type="number" placeholder="2. sayı">
+        <input id="b1" type="number" placeholder="1. sayı">
+        <input id="b2" type="number" placeholder="2. sayı">
       </div>
-      <button class="btn" onclick="calc('+')">Topla</button>
-      <button class="btn" onclick="calc('-')">Çıkar</button>
-      <button class="btn" onclick="calc('*')">Çarp</button>
-      <button class="btn" onclick="calc('/')">Böl</button>
-      <div id="res" class="result" style="display:none"></div>`;
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn" onclick="opBasic('+')">Topla</button>
+        <button class="btn" onclick="opBasic('-')">Çıkar</button>
+        <button class="btn" onclick="opBasic('*')">Çarp</button>
+        <button class="btn" onclick="opBasic('/')">Böl</button>
+      </div>
+      <div id="resBasic" class="result" style="display:none"></div>
+    `;
+    return;
   }
 
-  if(t==="percent"){
-    panelTitle.innerText="Yüzde Hesaplama";
-    panel.innerHTML=`
+  // ********** PERCENT (Yüzde) **********
+  if(id === 'percent'){
+    bodyEl.innerHTML = `
       <div class="controls">
-        <input id="p1" type="number" placeholder="Ana değer">
-        <input id="p2" type="number" placeholder="Yüzde (%)">
+        <input id="pval" type="number" placeholder="Ana değer">
+        <input id="prate" type="number" placeholder="Yüzde (%)">
       </div>
-      <button class="btn" onclick="percent()">Hesapla</button>
-      <div id="res" class="result" style="display:none"></div>`;
+      <button class="btn" onclick="calcPercent()">Hesapla</button>
+      <div id="resPercent" class="result" style="display:none"></div>
+    `;
+    return;
   }
 
-  if(t==="bmi"){
-    panelTitle.innerText="BMI Hesaplama";
-    panel.innerHTML=`
+  // ********** BMI **********
+  if(id === 'bmi'){
+    bodyEl.innerHTML = `
       <div class="controls">
-        <input id="w" type="number" placeholder="Kilo (kg)">
-        <input id="h" type="number" placeholder="Boy (cm)">
+        <input id="bw" type="number" placeholder="Kilo (kg)">
+        <input id="bh" type="number" placeholder="Boy (cm)">
       </div>
-      <button class="btn" onclick="bmi()">Hesapla</button>
-      <div id="res" class="result" style="display:none"></div>`;
+      <button class="btn" onclick="calcBMI()">Hesapla</button>
+      <div id="resBMI" class="result" style="display:none"></div>
+    `;
+    return;
   }
 
-  if(t==="age"){
-    panelTitle.innerText="Yaş Hesaplama";
-    panel.innerHTML=`
+  // ********** AGE **********
+  if(id === 'age'){
+    bodyEl.innerHTML = `
       <div class="controls">
-        <input id="d" type="date">
+        <input id="adate" type="date">
       </div>
-      <button class="btn" onclick="age()">Hesapla</button>
-      <div id="res" class="result" style="display:none"></div>`;
+      <button class="btn" onclick="calcAge()">Yaşı Hesapla</button>
+      <div id="resAge" class="result" style="display:none"></div>
+    `;
+    return;
   }
 
-  if(t==="time"){
-    panelTitle.innerText="Zaman Dönüşümü";
-    panel.innerHTML=`
+  // ********** TIME **********
+  if(id === 'time'){
+    bodyEl.innerHTML = `
       <div class="controls">
-        <input id="tv" type="number" placeholder="Değer">
-        <select id="tu"><option value="s">Saniye</option><option value="m">Dakika</option><option value="h">Saat</option></select>
+        <input id="tval" type="number" placeholder="Değer">
+        <select id="tunit"><option value="s">Saniye</option><option value="m">Dakika</option><option value="h">Saat</option></select>
       </div>
-      <button class="btn" onclick="time()">Dönüştür</button>
-      <div id="res" class="result" style="display:none"></div>`;
+      <button class="btn" onclick="calcTime()">Dönüştür</button>
+      <div id="resTime" class="result" style="display:none"></div>
+    `;
+    return;
   }
+
+  // ********** ADVANCED (Karekök/Üs/Mod/Yüzde) **********
+  if(id === 'advanced'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <input id="ax" type="number" placeholder="Değer">
+        <input id="ay" type="number" placeholder="Üs / Mod / Yüzde (opsiyonel)">
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn" onclick="advSqrt()">Karekök</button>
+        <button class="btn" onclick="advPower()">Üs</button>
+        <button class="btn" onclick="advMod()">Mod</button>
+        <button class="btn" onclick="advPercent()">Yüzde</button>
+      </div>
+      <div id="resAdv" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  // ********** CREDIT **********
+  if(id === 'credit'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <input id="crAmount" type="number" placeholder="Kredi tutarı (₺)">
+        <input id="crAnnual" type="number" placeholder="Yıllık faiz (%)">
+        <input id="crMonths" type="number" placeholder="Vade (ay)">
+      </div>
+      <button class="btn" onclick="calcCredit()">Hesapla</button>
+      <div id="resCredit" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  // ********** INTEREST **********
+  if(id === 'interest'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <input id="intP" type="number" placeholder="Ana para">
+        <input id="intR" type="number" placeholder="Yıllık oran (%)">
+        <input id="intT" type="number" placeholder="Yıl sayısı">
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        <button class="btn" onclick="calcSimpleInterest()">Basit Faiz</button>
+        <button class="btn" onclick="calcCompoundInterest()">Bileşik Faiz</button>
+      </div>
+      <div id="resInterest" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  // ********** SALARY **********
+  if(id === 'salary'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <input id="salGross" type="number" placeholder="Brüt maaş (₺)">
+        <input id="salTax" type="number" placeholder="Vergi (%)">
+        <input id="salSS" type="number" placeholder="SGK (%)">
+      </div>
+      <button class="btn" onclick="calcSalary()">Hesapla</button>
+      <div id="resSalary" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  // ********** CURRENCY **********
+  if(id === 'currency'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <input id="curAmount" type="number" placeholder="Tutar">
+        <input id="curRate" type="number" placeholder="Kur (1 birim = ? TL)">
+        <select id="curDir"><option value="toTL">Döviz → TL</option><option value="toFX">TL → Döviz</option></select>
+      </div>
+      <button class="btn" onclick="calcCurrency()">Dönüştür</button>
+      <div id="resCurrency" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  // ********** UNIT **********
+  if(id === 'unit'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <select id="unitSel"><option value="cm-m">cm ↔ m</option><option value="m-cm">m ↔ cm</option><option value="kg-g">kg ↔ g</option></select>
+        <input id="unitVal" type="number" placeholder="Değer">
+      </div>
+      <button class="btn" onclick="calcUnit()">Dönüştür</button>
+      <div id="resUnit" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  // ********** MOD / SQRT / POWER / CALC **********
+  if(id === 'mod'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <input id="modA" type="number" placeholder="Bölünen">
+        <input id="modB" type="number" placeholder="Bölen">
+      </div>
+      <button class="btn" onclick="calcMod()">Hesapla</button>
+      <div id="resMod" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  if(id === 'sqrt'){
+    bodyEl.innerHTML = `
+      <div class="controls"><input id="sqrtX" type="number" placeholder="Değer"></div>
+      <button class="btn" onclick="calcSqrt()">Hesapla</button>
+      <div id="resSqrt" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  if(id === 'power'){
+    bodyEl.innerHTML = `
+      <div class="controls">
+        <input id="powX" type="number" placeholder="Taban">
+        <input id="powY" type="number" placeholder="Üs">
+      </div>
+      <button class="btn" onclick="calcPower()">Hesapla</button>
+      <div id="resPow" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  if(id === 'calc'){
+    bodyEl.innerHTML = `
+      <div class="controls"><input id="expr" type="text" placeholder="Örn: 12+3*2 (yalnızca + - * / ( ) . ve rakam)"></div>
+      <button class="btn" onclick="calcExpr()">Hesapla</button>
+      <div id="resExpr" class="result" style="display:none"></div>
+    `;
+    return;
+  }
+
+  bodyEl.innerHTML = '<p>Bu araç hâlâ hazırlanıyor.</p>';
 }
 
-function show(t){
-  const r=document.getElementById("res");
-  r.style.display="block";
-  r.innerHTML=t;
+// ---- İşlevler ----
+
+// Basic işlemler
+function opBasic(op){
+  const a = parseFloat(document.getElementById('b1').value)||0;
+  const b = parseFloat(document.getElementById('b2').value)||0;
+  let r;
+  if(op === '+') r = a + b;
+  if(op === '-') r = a - b;
+  if(op === '*') r = a * b;
+  if(op === '/') r = (b === 0 ? 'Sıfıra bölünemez' : (a / b));
+  const el = document.getElementById('resBasic'); if(!el) return;
+  el.style.display = 'block'; el.innerText = 'Sonuç: ' + r;
 }
 
-function calc(op){
-  let a=parseFloat(n1.value)||0;
-  let b=parseFloat(n2.value)||0;
-  if(op==="/" && b===0) return show("Sıfıra bölünmez");
-  show("Sonuç: "+eval(a+op+b));
+// percent
+function calcPercent(){
+  const v = parseFloat(document.getElementById('pval').value)||0;
+  const p = parseFloat(document.getElementById('prate').value)||0;
+  document.getElementById('resPercent').style.display='block';
+  document.getElementById('resPercent').innerText = p + '% of ' + v + ' = ' + ((v*p)/100);
 }
 
-function percent(){
-  let b=parseFloat(p1.value)||0;
-  let r=parseFloat(p2.value)||0;
-  show(r+"% = "+(b*r/100));
+// bmi
+function calcBMI(){
+  const w = parseFloat(document.getElementById('bw').value)||0;
+  const h = parseFloat(document.getElementById('bh').value)||0;
+  if(!w || !h){ document.getElementById('resBMI').style.display='block'; document.getElementById('resBMI').innerText='Kilo ve boy girin'; return; }
+  const m = h/100; const bmi = w/(m*m);
+  let cat = 'Normal'; if(bmi<18.5) cat='Zayıf'; else if(bmi<25) cat='Normal'; else if(bmi<30) cat='Fazla kilolu'; else cat='Obez';
+  document.getElementById('resBMI').style.display='block'; document.getElementById('resBMI').innerText = 'BMI: ' + bmi.toFixed(2) + ' — ' + cat;
 }
 
-function bmi(){
-  let w=parseFloat(w.value)||0;
-  let hcm=parseFloat(h.value)||0;
-  let m=hcm/100; let b=w/(m*m);
-  show("BMI: "+b.toFixed(2));
+// age
+function calcAge(){
+  const v = document.getElementById('adate').value;
+  if(!v){ document.getElementById('resAge').style.display='block'; document.getElementById('resAge').innerText='Tarih girin'; return; }
+  const dob = new Date(v); const now = new Date();
+  let years = now.getFullYear() - dob.getFullYear();
+  const m = now.getMonth() - dob.getMonth();
+  if(m<0 || (m===0 && now.getDate() < dob.getDate())) years--;
+  const diff = now - dob; const days = Math.floor(diff/(1000*60*60*24));
+  document.getElementById('resAge').style.display='block'; document.getElementById('resAge').innerText = 'Yaş: ' + years + ' — Toplam gün: ' + days;
 }
 
-function age(){
-  let d=new Date(document.getElementById("d").value);
-  if(!d) return;
-  let now=new Date();
-  let y=now.getFullYear()-d.getFullYear();
-  let m=now.getMonth()-d.getMonth();
-  if(m<0||(m===0&&now.getDate()<d.getDate())) y--;
-  show("Yaş: "+y);
+// time
+function calcTime(){
+  const v = parseFloat(document.getElementById('tval').value)||0;
+  const u = document.getElementById('tunit').value;
+  let sec = (u==='s')?v:(u==='m')?v*60:v*3600;
+  const h = Math.floor(sec/3600); const m = Math.floor((sec%3600)/60); const s = Math.floor(sec%60);
+  document.getElementById('resTime').style.display='block'; document.getElementById('resTime').innerText = v + ' ' + u + ' = ' + h + ' saat ' + m + ' dk ' + s + ' sn';
 }
 
-function time(){
-  let v=parseFloat(tv.value)||0;
-  let u=tu.value;
-  let sec = (u==="s")?v:(u==="m"?v*60:v*3600);
-  let h = Math.floor(sec/3600);
-  let m = Math.floor((sec%3600)/60);
-  let s = sec%60;
-  show(`${v} ${u} = ${h} saat ${m} dk ${s} sn`);
+// advanced helpers
+function advSqrt(){ const x = parseFloat(document.getElementById('ax').value)||0; document.getElementById('resAdv').style.display='block'; document.getElementById('resAdv').innerText = 'Karekök: ' + Math.sqrt(x); }
+function advPower(){ const x = parseFloat(document.getElementById('ax').value)||0; const y = parseFloat(document.getElementById('ay').value)||2; document.getElementById('resAdv').style.display='block'; document.getElementById('resAdv').innerText = x + '^' + y + ' = ' + Math.pow(x,y); }
+function advMod(){ const x = parseFloat(document.getElementById('ax').value)||0; const y = parseFloat(document.getElementById('ay').value)||1; document.getElementById('resAdv').style.display='block'; document.getElementById('resAdv').innerText = 'Mod: ' + (x % y); }
+function advPercent(){ const x = parseFloat(document.getElementById('ax').value)||0; const p = parseFloat(document.getElementById('ay').value)||0; document.getElementById('resAdv').style.display='block'; document.getElementById('resAdv').innerText = p + '% of ' + x + ' = ' + (x*p/100); }
+
+// credit
+function calcCredit(){
+  const amount = parseFloat(document.getElementById('crAmount').value)||0;
+  const annual = parseFloat(document.getElementById('crAnnual').value)||0;
+  const months = parseInt(document.getElementById('crMonths').value)||1;
+  const monthlyRate = annual/100/12;
+  let monthly = monthlyRate === 0 ? amount / months : (amount * monthlyRate) / (1 - Math.pow(1+monthlyRate,-months));
+  const total = monthly * months;
+  document.getElementById('resCredit').style.display='block'; document.getElementById('resCredit').innerText = 'Aylık: ' + monthly.toFixed(2) + ' ₺ — Toplam: ' + total.toFixed(2) + ' ₺';
 }
+
+// interest
+function calcSimpleInterest(){ const P = parseFloat(document.getElementById('intP').value)||0; const r = parseFloat(document.getElementById('intR').value)||0; const t = parseFloat(document.getElementById('intT').value)||0; const interest = P * r/100 * t; document.getElementById('resInterest').style.display='block'; document.getElementById('resInterest').innerText = 'Basit faiz: ' + interest.toFixed(2) + ' — Toplam: ' + (P+interest).toFixed(2); }
+function calcCompoundInterest(){ const P = parseFloat(document.getElementById('intP').value)||0; const r = parseFloat(document.getElementById('intR').value)||0; const t = parseFloat(document.getElementById('intT').value)||0; const A = P * Math.pow(1 + (r/100), t); document.getElementById('resInterest').style.display='block'; document.getElementById('resInterest').innerText = 'Bileşik faiz toplam: ' + A.toFixed(2); }
+
+// salary
+function calcSalary(){ const gross = parseFloat(document.getElementById('salGross').value)||0; const tax = parseFloat(document.getElementById('salTax').value)||0; const ss = parseFloat(document.getElementById('salSS').value)||0; const taxAmt = gross * tax/100; const ssAmt = gross * ss/100; const net = gross - taxAmt - ssAmt; document.getElementById('resSalary').style.display='block'; document.getElementById('resSalary').innerText = 'Net maaş (tahmini): ' + net.toFixed(2) + ' ₺ (Vergi: ' + taxAmt.toFixed(2) + ', SGK: ' + ssAmt.toFixed(2) + ')'; }
+
+// currency
+function calcCurrency(){ const amt = parseFloat(document.getElementById('curAmount').value)||0; const rate = parseFloat(document.getElementById('curRate').value)||1; const dir = document.getElementById('curDir').value; if(dir==='toTL') document.getElementById('resCurrency').innerText = amt + ' birim = ' + (amt*rate).toFixed(2) + ' ₺'; else document.getElementById('resCurrency').innerText = amt + ' ₺ = ' + (rate===0 ? 'Geçersiz kur' : (amt/rate).toFixed(4) + ' birim'); document.getElementById('resCurrency').style.display='block'; }
+
+// unit
+function calcUnit(){ const sel = document.getElementById('unitSel').value; const v = parseFloat(document.getElementById('unitVal').value)||0; if(sel==='cm-m') document.getElementById('resUnit').innerText = v + ' cm = ' + (v/100) + ' m'; if(sel==='m-cm') document.getElementById('resUnit').innerText = v + ' m = ' + (v*100) + ' cm'; if(sel==='kg-g') document.getElementById('resUnit').innerText = v + ' kg = ' + (v*1000) + ' g'; document.getElementById('resUnit').style.display='block'; }
+
+// mod/sqrt/power/calc
+function calcMod(){ const a = parseFloat(document.getElementById('modA').value)||0; const b = parseFloat(document.getElementById('modB').value)||1; document.getElementById('resMod').style.display='block'; document.getElementById('resMod').innerText = 'Kalan: ' + (a % b); }
+function calcSqrt(){ const x = parseFloat(document.getElementById('sqrtX').value)||0; document.getElementById('resSqrt').style.display='block'; document.getElementById('resSqrt').innerText = 'Karekök: ' + Math.sqrt(x); }
+function calcPower(){ const x = parseFloat(document.getElementById('powX').value)||0; const y = parseFloat(document.getElementById('powY').value)||0; document.getElementById('resPow').style.display='block'; document.getElementById('resPow').innerText = x + '^' + y + ' = ' + Math.pow(x,y); }
+function calcExpr(){ const expr = (document.getElementById('expr').value||'').trim(); if(!/^[0-9+\-*/().\s]+$/.test(expr)){ document.getElementById('resExpr').style.display='block'; document.getElementById('resExpr').innerText='Geçersiz ifade'; return; } try{ const v = eval(expr); document.getElementById('resExpr').style.display='block'; document.getElementById('resExpr').innerText = 'Sonuç: ' + v; }catch(e){ document.getElementById('resExpr').style.display='block'; document.getElementById('resExpr').innerText='Hata'; } }
+
+// yardımcı - scroll ve görünürlük
+function showResult(id, text){ const el = document.getElementById(id); if(!el) return; el.style.display='block'; el.innerText = text; el.scrollIntoView({behavior:'smooth', block:'center'}); }
+
 </script>
-
 </body>
 </html>
