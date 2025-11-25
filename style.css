@@ -1,1 +1,31 @@
-css/style.css
+body {
+    margin: 0;
+    padding: 0;
+    background: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #1e1e1e;
+    border-bottom: 2px solid #6a00ff;
+}
+
+.logo {
+    width: 50px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 26px;
+    color: #d7b3ff;
+}
+
+.loading {
+    padding: 30px;
+    font-size: 20px;
+}
