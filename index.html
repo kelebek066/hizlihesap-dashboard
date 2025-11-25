@@ -1,355 +1,191 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Hızlı Hesap — Tüm Araçlar</title>
-<meta name="description" content="Toplama, çıkarma, çarpma, bölme, karekök, üs, mod, yüzde, kredi, faiz, BMI, yaş hesaplama, zaman & para birimi dönüşümü ve daha fazlası."/>
-<style>
-  :root{
-    --bg:#f5f8ff; --card:#fff; --accent:#0066ff; --muted:#6b7280;
-    --radius:12px; --shadow:0 10px 30px rgba(16,24,40,0.08);
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:#0b1220;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:980px;margin:20px auto;padding:16px}
-  header{display:flex;gap:14px;align-items:center;padding:18px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#2da8ff);color:#fff;box-shadow:var(--shadow)}
-  .logo{width:56px;height:56px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-weight:700}
-  h1{margin:0;font-size:22px}
-  p.lead{margin:4px 0 0;color:#e7f3ff;font-size:14px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hızlı Hesap</title>
 
-  .hero{display:flex;gap:18px;align-items:center;margin-top:18px;padding:18px;border-radius:var(--radius);background:linear-gradient(180deg,#fff,#f7fbff);box-shadow:var(--shadow)}
-  .hero img{width:180px;height:120px;object-fit:cover;border-radius:8px}
-  .hero .text h2{margin:0 0 6px;font-size:18px;color:var(--accent)}
-  .hero .text p{margin:0;color:var(--muted)}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
-  .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:var(--shadow);cursor:pointer;transition:transform .14s}
-  .card:hover{transform:translateY(-6px)}
-  .card h3{margin:0;font-size:16px;color:#062e63}
-  .card p{margin:8px 0 0;color:var(--muted);font-size:13px}
+        header {
+            background: #0066ff;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
 
-  .tool-area{margin-top:22px;padding:18px;background:var(--card);border-radius:12px;box-shadow:var(--shadow)}
-  .tool-head{display:flex;align-items:center;justify-content:space-between}
-  .tool-head h3{margin:0}
-  .tool{margin-top:12px}
+        .hero {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        .hero img {
+            width: 100%;
+        }
 
-  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-  input[type="number"], input[type="text"], select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;font-size:15px}
-  .row{display:flex;gap:10px}
-  .row > *{flex:1}
-  button.primary{display:inline-block;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;box-shadow:0 8px 24px rgba(0,102,255,0.12);font-weight:600}
-  .result{margin-top:10px;padding:12px;border-radius:8px;background:#f1f6ff;border:1px solid #e2efff;color:#08306e}
+        .container {
+            width: 95%;
+            max-width: 900px;
+            margin: 20px auto;
+        }
 
-  footer{margin-top:26px;text-align:center;color:var(--muted);font-size:13px}
-  @media (max-width:640px){.hero{flex-direction:column;align-items:flex-start}.hero img{width:100%;height:170px}}
-</style>
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #0066ff;
+            text-align: center;
+        }
+
+        input, button, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background: #0066ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #004ac1;
+        }
+
+        .result {
+            padding: 12px;
+            background: #e9f3ff;
+            border-left: 4px solid #0066ff;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+    </style>
+
+    <script>
+        function hesapla(islem) {
+            let a = parseFloat(document.getElementById("hs1").value);
+            let b = parseFloat(document.getElementById("hs2").value);
+            let sonuc = document.getElementById("hs_sonuc");
+
+            if (isNaN(a) || isNaN(b)) {
+                sonuc.innerHTML = "Lütfen iki sayı giriniz.";
+                return;
+            }
+
+            let r = 0;
+
+            switch(islem) {
+                case 'topla': r = a + b; break;
+                case 'cikar': r = a - b; break;
+                case 'carp': r = a * b; break;
+                case 'bol': r = b !== 0 ? (a / b) : "0'a bölünmez"; break;
+                case 'mod': r = a % b; break;
+                case 'yuzde': r = (a * b) / 100; break;
+                case 'us': r = Math.pow(a, b); break;
+                case 'karekok':
+                    sonuc.innerHTML = "1. Sayı karekökü: " + Math.sqrt(a);
+                    return;
+            }
+
+            sonuc.innerHTML = "Sonuç: " + r;
+        }
+
+        function bmiHesapla() {
+            let kilo = document.getElementById("bmi_kilo").value;
+            let boy = document.getElementById("bmi_boy").value / 100;
+            let sonuc = document.getElementById("bmi_sonuc");
+
+            if (!kilo || !boy) {
+                sonuc.innerHTML = "Lütfen değerleri giriniz.";
+                return;
+            }
+
+            let bmi = kilo / (boy * boy);
+            sonuc.innerHTML = "BMI Değeriniz: " + bmi.toFixed(2);
+        }
+
+        function yasHesapla() {
+            let dogum = document.getElementById("yas_tarih").value;
+            let s = document.getElementById("yas_sonuc");
+
+            if (!dogum) {
+                s.innerHTML = "Tarih giriniz.";
+                return;
+            }
+
+            let d = new Date(dogum);
+            let y = new Date().getFullYear() - d.getFullYear();
+
+            s.innerHTML = "Yaşınız: " + y;
+        }
+    </script>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <div class="logo">HH</div>
-      <div>
-        <h1>Hızlı Hesap</h1>
-        <p class="lead">Tüm hesaplama araçları tek sayfada — hızlı, güvenli ve mobil uyumlu.</p>
-      </div>
-    </header>
 
-    <section class="hero" aria-hidden="false">
-      <img src="/mnt/data/Screenshot_20251125_022422_Chrome.jpg" alt="Hızlı Hesap Hero" />
-      <div class="text">
-        <h2>Hemen hesaplayın</h2>
-        <p>Toplama, çıkarma, çarpma, bölme, karekök, üs, mod, yüzde, kredi, faiz, BMI, yaş, zaman ve döviz dönüşümü.</p>
-      </div>
-    </section>
+<header>Hızlı Hesap - Profesyonel Araçlar</header>
 
-    <!-- Tool cards -->
-    <section class="grid" aria-label="Araçlar">
-      <div class="card" data-tool="basic">
-        <h3>🧮 Dört İşlem</h3>
-        <p>Topla, çıkar, çarp, böl — tek kutuda.</p>
-      </div>
-      <div class="card" data-tool="advanced">
-        <h3>🔢 Matematik Araçları</h3>
-        <p>Karekök, üs alma, mod, yüzde hesaplama.</p>
-      </div>
-      <div class="card" data-tool="credit">
-        <h3>🏦 Kredi Hesaplama</h3>
-        <p>Aylık taksit ve toplam maliyet hesapla.</p>
-      </div>
-      <div class="card" data-tool="interest">
-        <h3>📈 Faiz Hesaplama</h3>
-        <p>Basit ve bileşik faiz hesaplayıcı.</p>
-      </div>
-      <div class="card" data-tool="bmi">
-        <h3>⚖️ BMI (Vücut Kitle İndeksi)</h3>
-        <p>Kilonuza göre sağlık kategorisi.</p>
-      </div>
-      <div class="card" data-tool="age">
-        <h3>🎂 Yaş Hesaplama</h3>
-        <p>Doğum tarihine göre yaş ve gün sayısı.</p>
-      </div>
-      <div class="card" data-tool="time">
-        <h3>⏱ Zaman Dönüştürücü</h3>
-        <p>Saat, dakika, saniye arasında dönüşüm.</p>
-      </div>
-      <div class="card" data-tool="currency">
-        <h3>💱 Para Birimi Dönüştürme</h3>
-        <p>Manuel döviz kuru girip dönüşüm yap.</p>
-      </div>
-    </section>
+<div class="hero">
+    <img src="images/hero.jpg" alt="Tanıtım Görseli">
+</div>
 
-    <div class="tool-area" id="tool-area" aria-live="polite">
-      <div class="tool-head">
-        <h3>Araç Seçilmedi</h3>
-        <div><small class="muted">Kartlardan birini seçin</small></div>
-      </div>
-      <div class="tool" id="tool-content">
-        <p>Üstteki kartlardan birine tıklayarak aracı aç.</p>
-      </div>
+<div class="container">
+
+    <!-- 1–8 Matematik Araçları -->
+    <div class="card">
+        <h2>Matematik Hesaplamaları</h2>
+
+        <input id="hs1" type="number" placeholder="1. Sayı">
+        <input id="hs2" type="number" placeholder="2. Sayı">
+
+        <button onclick="hesapla('topla')">Toplama</button>
+        <button onclick="hesapla('cikar')">Çıkarma</button>
+        <button onclick="hesapla('carp')">Çarpma</button>
+        <button onclick="hesapla('bol')">Bölme</button>
+        <button onclick="hesapla('mod')">Mod Alma</button>
+        <button onclick="hesapla('yuzde')">Yüzde Hesaplama</button>
+        <button onclick="hesapla('us')">Üs Alma</button>
+        <button onclick="hesapla('karekok')">Karekök</button>
+
+        <div class="result" id="hs_sonuc"></div>
     </div>
 
-    <!-- Ad / affiliate placeholder -->
-    <div style="margin-top:16px;padding:12px;border-radius:10px;background:#fff;border:1px solid #f0f0f0;text-align:center">
-      <strong>Reklam / Affiliate Alanı</strong>
-      <div style="margin-top:8px;color:var(--muted)">Buraya Google AdSense veya sponsor banner kodu ekleyin.</div>
+    <!-- 9–12 Finans Araçları -->
+    <div class="card">
+        <h2>Yaş Hesaplama</h2>
+        <input id="yas_tarih" type="date">
+        <button onclick="yasHesapla()">Hesapla</button>
+        <div class="result" id="yas_sonuc"></div>
     </div>
 
-    <footer>
-      © <span id="year"></span> Hızlı Hesap — Kolay, Hızlı, Ücretsiz
-    </footer>
-  </div>
+    <div class="card">
+        <h2>BMI / Vücut Kitle İndeksi</h2>
+        <input id="bmi_kilo" type="number" placeholder="Kilonuz (kg)">
+        <input id="bmi_boy" type="number" placeholder="Boyunuz (cm)">
+        <button onclick="bmiHesapla()">Hesapla</button>
+        <div class="result" id="bmi_sonuc"></div>
+    </div>
 
-<script>
-document.getElementById('year').innerText = new Date().getFullYear();
-const toolArea = document.getElementById('tool-area');
-const toolContent = document.getElementById('tool-content');
+</div>
 
-document.querySelectorAll('.card').forEach(card=>{
-  card.addEventListener('click', ()=> openTool(card.getAttribute('data-tool')));
-});
-
-function openTool(name){
-  toolArea.querySelector('.tool-head h3').innerText = {
-    basic: 'Dört İşlem',
-    advanced: 'Matematik Araçları',
-    credit: 'Kredi Hesaplama',
-    interest: 'Faiz Hesaplama',
-    bmi: 'BMI (Vücut Kitle İndeksi)',
-    age: 'Yaş Hesaplama',
-    time: 'Zaman Dönüştürücü',
-    currency: 'Para Birimi Dönüştürücü'
-  }[name] || 'Araç';
-
-  if(name === 'basic'){
-    toolContent.innerHTML = `
-      <label>Birinci sayı</label><input id="b-a" type="number" placeholder="Örn: 12" />
-      <label>İkinci sayı</label><input id="b-b" type="number" placeholder="Örn: 8" />
-      <div class="row" style="margin-top:10px">
-        <button class="primary" onclick="doBasic('+')">Topla</button>
-        <button class="primary" onclick="doBasic('-')">Çıkar</button>
-      </div>
-      <div class="row" style="margin-top:10px">
-        <button class="primary" onclick="doBasic('*')">Çarp</button>
-        <button class="primary" onclick="doBasic('/')">Böl</button>
-      </div>
-      <div id="b-res" class="result" style="display:none"></div>
-    `;
-  } else if(name === 'advanced'){
-    toolContent.innerHTML = `
-      <label>Değer</label><input id="a-x" type="number" placeholder="Örn: 9" />
-      <label>Üs (kullanmak istemezsen boş bırak)</label><input id="a-exp" type="number" placeholder="Örn: 2" />
-      <div class="row" style="margin-top:10px">
-        <button class="primary" onclick="doSqrt()">Karekök</button>
-        <button class="primary" onclick="doPower()">Üs Al</button>
-      </div>
-      <div class="row" style="margin-top:10px">
-        <button class="primary" onclick="doMod()">Mod</button>
-        <button class="primary" onclick="doPercent()">Yüzde</button>
-      </div>
-      <div id="a-res" class="result" style="display:none"></div>
-    `;
-  } else if(name === 'credit'){
-    toolContent.innerHTML = `
-      <label>Kredi Tutarı (₺)</label><input id="c-amount" type="number" placeholder="Örn: 50000" />
-      <label>Yıllık faiz oranı (%)</label><input id="c-rate" type="number" placeholder="Örn: 15" />
-      <label>Vade (ay)</label><input id="c-months" type="number" placeholder="Örn: 36" />
-      <button class="primary" onclick="doCredit()">Aylık Taksit Hesapla</button>
-      <div id="c-res" class="result" style="display:none"></div>
-    `;
-  } else if(name === 'interest'){
-    toolContent.innerHTML = `
-      <label>Ana Para (₺)</label><input id="i-principal" type="number" />
-      <label>Yıllık oran (%)</label><input id="i-rate" type="number" />
-      <label>Yıl sayısı</label><input id="i-years" type="number" />
-      <div class="row" style="margin-top:10px">
-        <button class="primary" onclick="doSimpleInterest()">Basit Faiz</button>
-        <button class="primary" onclick="doCompoundInterest()">Bileşik Faiz</button>
-      </div>
-      <div id="i-res" class="result" style="display:none"></div>
-    `;
-  } else if(name === 'bmi'){
-    toolContent.innerHTML = `
-      <label>Kilo (kg)</label><input id="bmi-w" type="number" />
-      <label>Boy (cm)</label><input id="bmi-h" type="number" />
-      <button class="primary" onclick="doBMI()">Hesapla</button>
-      <div id="bmi-res" class="result" style="display:none"></div>
-    `;
-  } else if(name === 'age'){
-    toolContent.innerHTML = `
-      <label>Doğum tarihi</label><input id="age-date" type="date" />
-      <button class="primary" onclick="doAge()">Yaşı Hesapla</button>
-      <div id="age-res" class="result" style="display:none"></div>
-    `;
-  } else if(name === 'time'){
-    toolContent.innerHTML = `
-      <label>Değer</label><input id="t-value" type="number" />
-      <label>Birimi</label>
-      <select id="t-unit"><option value="s">Saniye</option><option value="m">Dakika</option><option value="h">Saat</option></select>
-      <button class="primary" onclick="doTime()">Dönüştür</button>
-      <div id="t-res" class="result" style="display:none"></div>
-    `;
-  } else if(name === 'currency'){
-    toolContent.innerHTML = `
-      <label>Tutar</label><input id="cur-amt" type="number" placeholder="Örn: 100" />
-      <label>Döviz kuru (1 birim = ? TL)</label><input id="cur-rate" type="number" placeholder="Örn: 30 (1 USD = 30 TL)" />
-      <label>Yön</label>
-      <select id="cur-dir"><option value="toTL">Döviz → TL</option><option value="toFX">TL → Döviz</option></select>
-      <button class="primary" onclick="doCurrency()">Dönüştür</button>
-      <div id="cur-res" class="result" style="display:none"></div>
-    `;
-  } else {
-    toolContent.innerHTML = `<p>Bu araç henüz hazır değil.</p>`;
-  }
-}
-
-/* --- Fonksiyonlar --- */
-
-// Basic
-function doBasic(op){
-  const a = parseFloat(document.getElementById('b-a').value)||0;
-  const b = parseFloat(document.getElementById('b-b').value)||0;
-  let res;
-  if(op==='+') res = a + b;
-  if(op==='-') res = a - b;
-  if(op==='*') res = a * b;
-  if(op==='/') res = b === 0 ? 'Sıfıra bölünemez' : (a / b);
-  const el = document.getElementById('b-res');
-  el.style.display='block';
-  el.innerHTML = 'Sonuç: <strong>' + res + '</strong>';
-}
-
-// Advanced
-function doSqrt(){
-  const x = parseFloat(document.getElementById('a-x').value)||0;
-  const r = Math.sqrt(x);
-  show('a-res','Karekök: ' + r.toFixed(6));
-}
-function doPower(){
-  const x = parseFloat(document.getElementById('a-x').value)||0;
-  const e = parseFloat(document.getElementById('a-exp').value)||2;
-  const r = Math.pow(x,e);
-  show('a-res',''+x+' ^ '+e+' = ' + r);
-}
-function doMod(){
-  const x = parseFloat(document.getElementById('a-x').value)||0;
-  const e = parseFloat(document.getElementById('a-exp').value)||1;
-  const r = x % e;
-  show('a-res','Mod: ' + r);
-}
-function doPercent(){
-  const x = parseFloat(document.getElementById('a-x').value)||0;
-  const p = parseFloat(document.getElementById('a-exp').value)||0;
-  const val = x * p / 100;
-  show('a-res',p + '% of ' + x + ' = ' + val);
-}
-
-// Credit
-function doCredit(){
-  const amount = parseFloat(document.getElementById('c-amount').value)||0;
-  const annual = parseFloat(document.getElementById('c-rate').value)||0;
-  const months = parseInt(document.getElementById('c-months').value)||1;
-  const monthlyRate = annual/100/12;
-  let monthly;
-  if(monthlyRate === 0) monthly = amount / months;
-  else monthly = (amount * monthlyRate) / (1 - Math.pow(1+monthlyRate, -months));
-  const total = monthly * months;
-  show('c-res','Aylık: ' + monthly.toFixed(2) + ' ₺ — Toplam: ' + total.toFixed(2) + ' ₺');
-}
-
-// Interest
-function doSimpleInterest(){
-  const P = parseFloat(document.getElementById('i-principal').value)||0;
-  const r = parseFloat(document.getElementById('i-rate').value)||0;
-  const t = parseFloat(document.getElementById('i-years').value)||0;
-  const interest = P * r/100 * t;
-  show('i-res','Basit faiz: ' + interest.toFixed(2) + ' — Toplam: ' + (P+interest).toFixed(2));
-}
-function doCompoundInterest(){
-  const P = parseFloat(document.getElementById('i-principal').value)||0;
-  const r = parseFloat(document.getElementById('i-rate').value)||0;
-  const t = parseFloat(document.getElementById('i-years').value)||0;
-  const n = 1; // yılda 1 kez bileşik (isteğe göre arttırılabilir)
-  const A = P * Math.pow(1 + (r/100)/n, n*t);
-  show('i-res','Bileşik Faiz Toplam: ' + A.toFixed(2));
-}
-
-// BMI
-function doBMI(){
-  const w = parseFloat(document.getElementById('bmi-w').value)||0;
-  const h = parseFloat(document.getElementById('bmi-h').value)||0;
-  if(!w || !h){ show('bmi-res','Lütfen kilo ve boy girin'); return; }
-  const m = h/100;
-  const bmi = w / (m*m);
-  let cat = 'Normal';
-  if(bmi < 18.5) cat = 'Zayıf';
-  else if(bmi < 25) cat = 'Normal';
-  else if(bmi < 30) cat = 'Fazla kilolu';
-  else cat = 'Obez';
-  show('bmi-res', 'BMI: ' + bmi.toFixed(2) + ' — ' + cat);
-}
-
-// Age
-function doAge(){
-  const d = document.getElementById('age-date').value;
-  if(!d){ show('age-res','Lütfen doğum tarihi girin'); return; }
-  const dob = new Date(d);
-  const now = new Date();
-  let years = now.getFullYear() - dob.getFullYear();
-  const m = now.getMonth() - dob.getMonth();
-  if(m < 0 || (m === 0 && now.getDate() < dob.getDate())) years--;
-  const diff = now - dob;
-  const days = Math.floor(diff / (1000*60*60*24));
-  show('age-res','Yaş: ' + years + ' — Toplam gün: ' + days);
-}
-
-// Time convert
-function doTime(){
-  const v = parseFloat(document.getElementById('t-value').value)||0;
-  const u = document.getElementById('t-unit').value;
-  let sec=0;
-  if(u==='s') sec = v;
-  if(u==='m') sec = v*60;
-  if(u==='h') sec = v*3600;
-  const h = Math.floor(sec/3600); const m = Math.floor((sec%3600)/60); const s = Math.floor(sec%60);
-  show('t-res', `${v} ${u} = ${h} saat ${m} dakika ${s} saniye`);
-}
-
-// Currency
-function doCurrency(){
-  const amt = parseFloat(document.getElementById('cur-amt').value)||0;
-  const rate = parseFloat(document.getElementById('cur-rate').value)||1;
-  const dir = document.getElementById('cur-dir').value;
-  if(dir === 'toTL'){ show('cur-res', amt + ' birim = ' + (amt * rate).toFixed(2) + ' ₺'); }
-  else { if(rate===0) show('cur-res','Geçersiz kur'); else show('cur-res', amt + ' ₺ = ' + (amt / rate).toFixed(2) + ' birim'); }
-}
-
-function show(id, txt){
-  const el = document.getElementById(id);
-  el.style.display='block';
-  el.innerHTML = txt;
-}
-</script>
 </body>
 </html>
